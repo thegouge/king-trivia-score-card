@@ -1,0 +1,123 @@
+#app {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+#top-notes {
+  display: grid;
+  grid-template-areas: "a  e" "b  f" "c  g" "d  h";
+}
+
+.in-field {
+  margin: 5px;
+}
+
+#in-date {
+  grid-area: a;
+}
+
+#in-loc {
+  grid-area: b;
+}
+
+#in-arr {
+  grid-area: c;
+}
+
+#in-start {
+  grid-area: d;
+}
+
+#in-teams {
+  grid-area: e;
+}
+
+#in-play {
+  grid-area: f;
+}
+
+#in-emp {
+  grid-area: g;
+}
+
+#in-notes {
+  grid-area: h;
+}
+
+#body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+#name-title {
+  margin-left: 25px;
+}
+
+#total-title {
+  margin-right: 15px;
+}
+
+.team-line {
+  grid-column: 1 / 11;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  border: 1px solid gray;
+}
+
+.team-num,
+.team-name {
+  display: block;
+  height: fit-content;
+  margin: auto;
+  margin-left: 10px;
+}
+
+.team-num {
+  margin-right: 15px;
+}
+
+.team-name {
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+.round-score {
+  padding: 20px;
+  border-left: 1px solid gray;
+  position: relative;
+}
+
+.score {
+  width: 60%;
+  height: 20px;
+  margin-top: 0;
+}
+
+.total {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
+.team-total {
+  padding: 30px 0;
+  border-left: 1px solid gray;
+  text-align: center;
+  width: 60px;
+}
+
+.close-btn {
+  user-select: none;
+  cursor: pointer;
+  width: 100px;
+}
