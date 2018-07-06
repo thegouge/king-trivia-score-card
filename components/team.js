@@ -5,8 +5,8 @@ Vue.component("team", {
       <input type="text" class="team-name" v-model="name">
 
       <div class="round-score" v-for="(round, roundIndex) in rounds" v-bind:key="roundIndex">
-        <input type="number" class="score" min="0" max="25" v-model="rounds[roundIndex].gained">
-        <span v-if="roundIndex > 0" class="total">{{ (rounds[roundIndex].gained > 0) ? getRoundTotal(roundIndex) : 0 }}</span>
+        <input type="number" class="score" min="-1" max="25" v-model="rounds[roundIndex].gained">
+        <span v-if="roundIndex > 0" class="total">{{ (rounds[roundIndex].gained == 0) ? 0 : getRoundTotal(roundIndex) }}</span>
       </div>
 
       <div class="team-total">{{ total }}</div>
