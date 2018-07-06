@@ -14,7 +14,7 @@ Vue.component("score-board", {
         <h2 class="round-num" id="total-title">Total</h2>
 
       </div>
-        <team v-for="team in teamRankings" ref="tems"></team>
+        <team v-for="(team, index) in teamRankings" v-bind:key="index" ref="tems"></team>
     </section>
   </main>
   `,
