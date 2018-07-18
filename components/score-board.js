@@ -1,12 +1,6 @@
 export const scoreBoard = Vue.component("score-board", {
   template: `
-  <main id="scores">
-    <button @click="addTeam">Add Team</button>
-    <button @click="showStandings">Show Standings</button>
-
-    <standings v-bind:teamRankings="teamArray" v-if="placings" @close-standings="closePlacings()"></standings>
-
-    <table id="body">
+    <table id= "scores">
       <tr id="top-bar">
         <th id="num-title">Team#</th>
         <th id="name-title">Team Name</th>
@@ -16,7 +10,6 @@ export const scoreBoard = Vue.component("score-board", {
       </tr>
         <team v-for="(team, index) in teamArray" v-bind:key="index" ref="tems"></team>
     </table>
-  </main>
   `,
   data() {
     return {
@@ -44,15 +37,6 @@ export const scoreBoard = Vue.component("score-board", {
     }
   },
   methods: {
-    addTeam() {
-      this.$emit("add-team");
-    },
-    showStandings() {
-      this.$emit("update-rankings", this.teams);
-      this.placings = true;
-    },
-    closePlacings() {
-      this.placings = false;
-    }
+
   }
 });

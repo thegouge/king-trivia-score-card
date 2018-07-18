@@ -3,23 +3,36 @@ export const app = Vue.component("app", {
   <div id="app">
     <h1>King Trivia Score Card</h1>
     <meta-notes></meta-notes>
-    <score-board v-bind:teamArray="teamArray" @add-team="add" @update-rankings="updateTeams"></score-board>
+
+    <div id="toolbar">
+      <button @click="addTeam">Add Team</button>
+    </div>
+
+    <div id="tab-bar">
+      <div id="score-tab" @click="placings = false">Score Board</div>
+      <div id="standings-tab" @click="showStandings">Team Rankings</div>
+    </div>
+
+    <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings()"></standings>
+
+    <score-board v-bind:teamArray="teamArray" v-if="!placings"></score-board>
   </div>
   `,
   data() {
     return {
       teamArray: [],
+      placings: false
     }
   },
   methods: {
-    add() {
+    addTeam() {
       this.teamArray.push({
         name: "",
         place: "",
         total: 0
       });
     },
-    updateTeams(teams) {
+    showStandings() {
       this.teamArray = this.teamArray.map((tem, index) => ({
         name: teams[index].name,
         total: teams[index].total
@@ -41,6 +54,10 @@ export const app = Vue.component("app", {
             break;
         }
       });
+      this.placings = true;
+    },
+    closePlacings() {
+      this.placings = false;
     }
   }
 });
