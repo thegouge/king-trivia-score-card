@@ -12,19 +12,15 @@
 </head>
 
 <body>
-  <div id="app">
-    <h1>King Trivia Score Card</h1>
-    <meta-notes></meta-notes>
-
-    <score-board></score-board>
+  <div id="vue">
+    <app></app>
   </div>
 
-  <script src="https://vuejs.org/js/vue.min.js"></script>
-  <script src="components/meta-notes.js"></script>
-  <script src="components/team.js"></script>
-  <script src="components/standings.js"></script>
-  <script src="components/score-board.js"></script>
-  <script src="app.js"></script>
+  <script src="https://vuejs.org/js/vue.js"></script>
+  <script type="module">
+    import "./components/app.js"; import "./components/meta-notes.js"; import "./components/team.js"; import "./components/standings.js";
+    import "./components/score-board.js"; import "./main.js";
+  </script>
 </body>
 
 </html>

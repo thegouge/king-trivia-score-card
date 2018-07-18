@@ -48,11 +48,14 @@ h1 {
 }
 
 #body {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 
+td {
+  text-align: center;
+}
+
+/*
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -114,7 +117,7 @@ h1 {
   border-left: 1px solid gray;
   text-align: center;
   width: 60px;
-}
+} */
 
 .close-btn {
   user-select: none;

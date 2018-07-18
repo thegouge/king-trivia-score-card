@@ -1,26 +1,25 @@
-Vue.component("score-board", {
+export const scoreBoard = Vue.component("score-board", {
   template: `
   <main id="scores">
     <button @click="addTeam">Add Team</button>
     <button @click="showStandings">Show Standings</button>
 
-    <standings v-bind:teamRankings="teamRankings" v-if="placings" @close-standings="placings = false"></standings>
-    <section id="body">
-      <div class="top-bar">
-        <h2 id="num-title">Team#</h2>
-        <h2 id="name-title">Team Name</h2>
+    <standings v-bind:teamRankings="teamArray" v-if="placings" @close-standings="closePlacings()"></standings>
 
-        <h2 class="round-num" v-for="round in rounds">{{ round }}</h2>
-        <h2 class="round-num" id="total-title">Total</h2>
+    <table id="body">
+      <tr id="top-bar">
+        <th id="num-title">Team#</th>
+        <th id="name-title">Team Name</th>
 
-      </div>
-        <team v-for="(team, index) in teamRankings" v-bind:key="index" ref="tems"></team>
-    </section>
+        <th class="round-num" v-for="round in rounds">{{ round }}</th>
+        <th class="round-num" id="total-title">Total</th>
+      </tr>
+        <team v-for="(team, index) in teamArray" v-bind:key="index" ref="tems"></team>
+    </table>
   </main>
   `,
   data() {
     return {
-      teamRankings: [],
       placings: false,
       rounds: [
         "Round 1",
@@ -33,6 +32,12 @@ Vue.component("score-board", {
       ]
     }
   },
+  props: {
+    teamArray: {
+      type: Array,
+      required: true
+    }
+  },
   computed: {
     teams() {
       return this.$refs.tems;
@@ -40,21 +45,14 @@ Vue.component("score-board", {
   },
   methods: {
     addTeam() {
-      this.teamRankings.push({
-        name: "",
-        total: 0
-      });
+      this.$emit("add-team");
     },
     showStandings() {
-      this.teamRankings = this.teamRankings.map((rank, index) => {
-        return {
-          name: this.teams[index].name,
-          total: this.teams[index].total
-        }
-      });
-      this.teamRankings.sort((a, b) => parseInt(a.total) < parseInt(b.total));
+      this.$emit("update-rankings", this.teams);
       this.placings = true;
-      console.log(this.teamRankings);
+    },
+    closePlacings() {
+      this.placings = false;
     }
   }
 });

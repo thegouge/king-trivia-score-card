@@ -1,4 +1,4 @@
-Vue.component("meta-notes", {
+export const meta = Vue.component("meta-notes", {
   template: `
   <form id="top-notes" @submit.prevent="onSubmit">
       <p id="in-date" class="in-field">
