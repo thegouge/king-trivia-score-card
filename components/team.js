@@ -51,11 +51,12 @@ export const team = Vue.component("team", {
   },
   computed: {
     total() {
-      return this.rounds.reduce((tot, round) => tot += parseInt(round.gained), 0);
+      return this.rounds.reduce((tot, round) => tot + parseInt(round.gained), 0);
     }
   },
   methods: {
     getRoundTotal(index) {
+      this.$emit("change", this);
       let result = 0;
       for (let i = 0; i < index + 1; i++) {
         result += parseInt(this.rounds[i].gained);

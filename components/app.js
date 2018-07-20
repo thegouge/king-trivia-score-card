@@ -6,16 +6,12 @@ export const app = Vue.component("app", {
 
     <div id="toolbar">
       <button @click="addTeam">Add Team</button>
+      <button @click="showStandings">Show Standings</button>
     </div>
 
-    <div id="tab-bar">
-      <div id="score-tab" @click="placings = false">Score Board</div>
-      <div id="standings-tab" @click="showStandings">Team Rankings</div>
-    </div>
+    <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
 
-    <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings()"></standings>
-
-    <score-board v-bind:teamArray="teamArray" v-if="!placings"></score-board>
+    <score-board v-bind:teamArray="teamArray" @change="upTeam"></score-board>
   </div>
   `,
   data() {
@@ -32,11 +28,16 @@ export const app = Vue.component("app", {
         total: 0
       });
     },
+    upTeam(team) {
+      let index = team._uid - 4;
+      this.teamArray[index] = {
+        name: team.name,
+        place: "",
+        total: team.total
+      }
+      console.log(this.teamArray[index]);
+    },
     showStandings() {
-      this.teamArray = this.teamArray.map((tem, index) => ({
-        name: teams[index].name,
-        total: teams[index].total
-      }));
       this.teamArray.sort((a, b) => parseInt(a.total) < parseInt(b.total));
       this.teamArray.forEach((team, index) => {
         switch (index) {
