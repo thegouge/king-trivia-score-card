@@ -8,7 +8,7 @@ export const scoreBoard = Vue.component("score-board", {
         <th class="round-num" v-for="round in rounds">{{ round }}</th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
-        <team v-for="(team, index) in teamArray" v-bind:key="index" ref="tems" @change="updateTeam"></team>
+        <team v-for="(team, index) in teamArray" v-bind:key="index" v-bind:teamArray="teamArray" ref="tems"></team>
     </table>
   `,
   data() {
@@ -36,9 +36,5 @@ export const scoreBoard = Vue.component("score-board", {
       return this.$refs.tems;
     }
   },
-  methods: {
-    updateTeam(team) {
-      this.$emit("change", team);
-    }
-  }
+  methods: {}
 });

@@ -2,7 +2,7 @@ export const app = Vue.component("app", {
   template: `
   <div id="app">
     <h1>King Trivia Score Card</h1>
-    <meta-notes></meta-notes>
+    <meta-notes v-bind:teamArray="teamArray"></meta-notes>
 
     <div id="toolbar">
       <button @click="addTeam">Add Team</button>
@@ -11,7 +11,7 @@ export const app = Vue.component("app", {
 
     <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
 
-    <score-board v-bind:teamArray="teamArray" @change="upTeam"></score-board>
+    <score-board v-bind:teamArray="teamArray"></score-board>
   </div>
   `,
   data() {
@@ -35,11 +35,13 @@ export const app = Vue.component("app", {
         place: "",
         total: team.total
       }
-      console.log(this.teamArray[index]);
     },
     showStandings() {
-      this.teamArray.sort((a, b) => parseInt(a.total) < parseInt(b.total));
-      this.teamArray.forEach((team, index) => {
+      this.teamArray.forEach((team) => {
+        this.upTeam(team);
+      })
+      let sorted = this.teamArray.sort((a, b) => parseInt(a.total) < parseInt(b.total));
+      sorted.forEach((team, index) => {
         switch (index) {
           case 0:
             team.place = "1st";
@@ -55,6 +57,7 @@ export const app = Vue.component("app", {
             break;
         }
       });
+      console.log(sorted);
       this.placings = true;
     },
     closePlacings() {

@@ -23,7 +23,7 @@ export const meta = Vue.component("meta-notes", {
 
       <p id="in-teams" class="in-field">
         <label for="teams"># of Teams</label>
-        <input type="number" id="num-teams">
+        <input type="number" id="num-teams" v-bind:value="this.teamArray.length">
       </p>
 
       <p id="in-play" class="in-field">
@@ -41,5 +41,11 @@ export const meta = Vue.component("meta-notes", {
         <textarea id="notes"></textarea>
       </p>
     </form>
-  `
+  `,
+  props: {
+    teamArray: {
+      type: Array,
+      required: false
+    }
+  }
 });

@@ -2,6 +2,7 @@ export const team = Vue.component("team", {
   template: `
     <tr class="team-line">
       <td class="num">
+        {{ this.index }}.
         <input type="number" class="team-num" min="10000" max="99999" v-model="num">
       </td>
       <td class="name">
@@ -46,7 +47,8 @@ export const team = Vue.component("team", {
           round: 7,
           gained: 0,
         }
-      ]
+      ],
+      index: this.teamArray.length
     };
   },
   computed: {
@@ -56,12 +58,17 @@ export const team = Vue.component("team", {
   },
   methods: {
     getRoundTotal(index) {
-      this.$emit("change", this);
       let result = 0;
       for (let i = 0; i < index + 1; i++) {
         result += parseInt(this.rounds[i].gained);
       }
       return result;
+    }
+  },
+  props: {
+    teamArray: {
+      type: Array,
+      required: true
     }
   }
 });
