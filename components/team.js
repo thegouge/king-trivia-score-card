@@ -2,14 +2,13 @@ export const team = Vue.component("team", {
   template: `
     <tr class="team-line">
       <td class="num">
-        {{ this.index }}.
-        <input type="number" class="team-num" min="10000" max="99999" v-model="num">
+        <input type="number" class="team-num" min="10000" max="99999" v-model="num" @click="select('team-num')">
       </td>
       <td class="name">
-        <input type="text" class="team-name" v-model="name">
+        <input type="text" class="team-name" v-model="name" @change="updateSelf" @click="select('team-name')">
       </td>
       <td class="round-score" v-for="(round, roundIndex) in rounds" v-bind:key="roundIndex">
-        <input type="number" class="score" min="-1" max="25" v-model="rounds[roundIndex].gained">
+        <input type="number" class="score" v-bind:id="'score-' +  + '-' + round.number" min="-1" max="25" @change="updateSelf" v-model="rounds[roundIndex].gained" @click="select('score')">
         <span v-if="roundIndex > 0" class="total">{{ (rounds[roundIndex].gained == 0) ? 0 : getRoundTotal(roundIndex) }}</span>
       </td>
       <td class="team-total">{{ total }}</td>
@@ -20,35 +19,34 @@ export const team = Vue.component("team", {
       name: "",
       num: 0,
       rounds: [{
-          round: 1,
+          number: 1,
           gained: 0,
         },
         {
-          round: 2,
-          gained: 0,
+          number: 2,
+          gained: 0
         },
         {
-          round: 3,
-          gained: 0,
+          number: 3,
+          gained: 0
         },
         {
-          round: 4,
-          gained: 0,
+          number: 4,
+          gained: 0
         },
         {
-          round: 5,
-          gained: 0,
+          number: 5,
+          gained: 0
         },
         {
-          round: 6,
-          gained: 0,
+          number: 6,
+          gained: 0
         },
         {
-          round: 7,
-          gained: 0,
+          number: 7,
+          gained: 0
         }
       ],
-      index: this.teamArray.length
     };
   },
   computed: {
@@ -63,12 +61,13 @@ export const team = Vue.component("team", {
         result += parseInt(this.rounds[i].gained);
       }
       return result;
-    }
-  },
-  props: {
-    teamArray: {
-      type: Array,
-      required: true
+    },
+    updateSelf() {
+      this.$emit("total-change", this);
+    },
+    select(arg) {
+      let element = document.querySelector('.' + arg);
+      // element.select();
     }
   }
 });

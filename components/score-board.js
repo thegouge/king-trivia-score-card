@@ -8,7 +8,7 @@ export const scoreBoard = Vue.component("score-board", {
         <th class="round-num" v-for="round in rounds">{{ round }}</th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
-        <team v-for="(team, index) in teamArray" v-bind:key="index" v-bind:teamArray="teamArray" ref="tems"></team>
+        <team v-for="(team, index) in teamArray" v-bind:key="index" v-bind:teamArray="teamArray" @total-change="passAlong" ref="tems"></team>
     </table>
   `,
   data() {
@@ -25,6 +25,12 @@ export const scoreBoard = Vue.component("score-board", {
       ]
     }
   },
+  methods: {
+    passAlong(team) {
+      let index = this.teams.indexOf(team);
+      this.$emit("passed", team, index);
+    }
+  },
   props: {
     teamArray: {
       type: Array,
@@ -35,6 +41,5 @@ export const scoreBoard = Vue.component("score-board", {
     teams() {
       return this.$refs.tems;
     }
-  },
-  methods: {}
+  }
 });

@@ -11,14 +11,14 @@ export const app = Vue.component("app", {
 
     <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
 
-    <score-board v-bind:teamArray="teamArray"></score-board>
+    <score-board v-bind:teamArray="teamArray" @passed="upTeam"></score-board>
   </div>
   `,
   data() {
     return {
       teamArray: [],
       placings: false
-    }
+    };
   },
   methods: {
     addTeam() {
@@ -28,19 +28,17 @@ export const app = Vue.component("app", {
         total: 0
       });
     },
-    upTeam(team) {
-      let index = team._uid - 4;
+    upTeam(team, index) {
       this.teamArray[index] = {
         name: team.name,
         place: "",
         total: team.total
-      }
+      };
     },
     showStandings() {
-      this.teamArray.forEach((team) => {
-        this.upTeam(team);
-      })
-      let sorted = this.teamArray.sort((a, b) => parseInt(a.total) < parseInt(b.total));
+      let sorted = this.teamArray.sort(
+        (a, b) => parseInt(a.total) < parseInt(b.total)
+      );
       sorted.forEach((team, index) => {
         switch (index) {
           case 0:
@@ -57,7 +55,6 @@ export const app = Vue.component("app", {
             break;
         }
       });
-      console.log(sorted);
       this.placings = true;
     },
     closePlacings() {
