@@ -7,6 +7,7 @@ export const app = Vue.component("app", {
     <div id="toolbar">
       <button @click="addTeam">Add Team</button>
       <button @click="showStandings">Show Standings</button>
+      <!-- <button @click="exportFile">Export to CSV</button> -->
     </div>
 
     <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
@@ -16,7 +17,19 @@ export const app = Vue.component("app", {
   `,
   data() {
     return {
-      teamArray: [],
+      teamArray: [{
+        name: "",
+        place: "",
+        total: 0
+      }, {
+        name: "",
+        place: "",
+        total: 0
+      }, {
+        name: "",
+        place: "",
+        total: 0
+      }],
       placings: false
     };
   },
@@ -59,6 +72,9 @@ export const app = Vue.component("app", {
     },
     closePlacings() {
       this.placings = false;
+    },
+    exportFile() {
+      console.log("working on it!");
     }
   }
 });
