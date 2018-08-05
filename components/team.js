@@ -1,15 +1,16 @@
 export const team = Vue.component("team", {
   template: `
     <tr class="team-line">
-      <td class="num">
-        <input type="number" class="team-num" min="10000" max="99999" v-model="num" @click="select('team-num')">
+      <td class="team-box">
+        {{ index }}.
+        <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')">
       </td>
       <td class="name">
-        <input type="text" class="team-name" v-model="name" @change="updateSelf" @click="select('team-name')">
+        <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf" @click="select('team-name')">
       </td>
       <td class="round-score" v-for="(round, roundIndex) in rounds" v-bind:key="roundIndex">
-        <input type="number" class="score" v-bind:id="'score-' +  + '-' + round.number" min="-1" max="25" @change="updateSelf" v-model="rounds[roundIndex].gained" @click="select('score')">
-        <span v-if="roundIndex > 0" class="total">{{ (rounds[roundIndex].gained == 0) ? 0 : getRoundTotal(roundIndex) }}</span>
+        <input type="number" class="score" :id="'score-' + index + '-' + round.number" min="-1" max="25" @change="updateSelf" v-model="rounds[roundIndex].gained" @click="select('score', round.number)">
+        <span v-if="roundIndex > 0" class="total">{{ (rounds[roundIndex].gained === 0) ? 0 : getRoundTotal(roundIndex) }}</span>
       </td>
       <td class="team-total">{{ total }}</td>
     </tr>
@@ -17,7 +18,6 @@ export const team = Vue.component("team", {
   data() {
     return {
       name: "",
-      num: 0,
       rounds: [{
           number: 1,
           gained: 0,
@@ -66,8 +66,21 @@ export const team = Vue.component("team", {
       this.$emit("total-change", this);
     },
     select(arg) {
-      let element = document.querySelector('.' + arg);
-      // element.select();
+      let id;
+      if (arg === "score") {
+        id = `score-${this.index}-${arguments[1]}`;
+      } else {
+        id = `${arg}-${this.index}`;
+      }
+
+      let element = document.getElementById(id);
+      element.select();
+    }
+  },
+  props: {
+    index: {
+      type: Number,
+      required: true
     }
   }
 });

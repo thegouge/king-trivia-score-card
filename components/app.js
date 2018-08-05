@@ -47,6 +47,7 @@ export const app = Vue.component("app", {
         place: "",
         total: team.total
       };
+      store.updateTeam(team);
     },
     showStandings() {
       let sorted = this.teamArray.sort(
