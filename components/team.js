@@ -2,8 +2,8 @@ export const team = Vue.component("team", {
   template: `
     <tr class="team-line">
       <td class="team-box">
-        {{ index }}.
-        <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')">
+        {{ index + 1 }}.
+        <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')" v-model="teamNum">
       </td>
       <td class="name">
         <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf" @click="select('team-name')">
@@ -18,6 +18,7 @@ export const team = Vue.component("team", {
   data() {
     return {
       name: "",
+      teamNum: "00000",
       rounds: [{
           number: 1,
           gained: 0,

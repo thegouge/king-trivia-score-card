@@ -2,12 +2,12 @@ export const app = Vue.component("app", {
   template: `
   <div id="app">
     <h1>King Trivia Score Card</h1>
-    <meta-notes v-bind:teamArray="teamArray"></meta-notes>
+    <meta-notes v-bind:teamArray="teamArray" ref="metaNotes"></meta-notes>
 
     <div id="toolbar">
       <button @click="addTeam">Add Team</button>
       <button @click="showStandings">Show Standings</button>
-      <!-- <button @click="exportFile">Export to CSV</button> -->
+      <button @click="exportFile">Export</button>
     </div>
 
     <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
@@ -30,7 +30,8 @@ export const app = Vue.component("app", {
         place: "",
         total: 0
       }],
-      placings: false
+      placings: false,
+      shared: store
     };
   },
   methods: {
@@ -47,7 +48,7 @@ export const app = Vue.component("app", {
         place: "",
         total: team.total
       };
-      store.updateTeam(team);
+      store.updateTeam(team, index);
     },
     showStandings() {
       let sorted = this.teamArray.sort(
@@ -75,7 +76,7 @@ export const app = Vue.component("app", {
       this.placings = false;
     },
     exportFile() {
-      console.log("working on it!");
+      store.updateMeta(this.$refs.metaNotes);
     }
   }
 });
