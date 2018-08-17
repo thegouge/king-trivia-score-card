@@ -51,9 +51,16 @@ export const app = Vue.component("app", {
       store.updateTeam(team, index);
     },
     showStandings() {
-      let sorted = this.teamArray.sort(
-        (a, b) => parseInt(a.total) < parseInt(b.total)
-      );
+      let sorted = this.teamArray.sort((a, b) => {
+        let first = parseInt(a.total);
+        let second = parseInt(b.total);
+        if (first < second) {
+          return 1;
+        } else if (second < first) {
+          return -1;
+        }
+        return 0;
+      });
       sorted.forEach((team, index) => {
         switch (index) {
           case 0:
