@@ -1,7 +1,7 @@
 export const scoreBoard = Vue.component("score-board", {
   template: `
     <table id= "scores">
-      <meta-notes ref="metaNotes"></meta-notes>
+      <meta-notes ref="metaNotes" />
       <div id="toolbar">
         <button @click="addTeam">Add Team</button>
         <button @click="exportFile">Export</button>
@@ -14,7 +14,7 @@ export const scoreBoard = Vue.component("score-board", {
         <th class="round-num" v-for="round in rounds">Round {{ round.number }}</th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
-        <team v-for="(team, index) in this.shared.state.teams" v-bind:key="index" ref="tems" v-bind:index="index"></team>
+        <team v-for="(team, index) in this.shared.state.teams" v-bind:key="index" ref="tems" v-bind:index="index" />
     </table>
   `,
   data() {

@@ -27,6 +27,11 @@ const store = {
       total: 0
     });
   },
+  updateMeta(note, value) {
+    if (this.debug) console.log(`Updating '${note}' in the store!`);
+
+    this.state[note] = value;
+  },
   updateTeam(team, i) {
     if (this.debug) console.log(`updating ${team.name} in the store!`);
     this.state.teams[i] = {
@@ -64,10 +69,5 @@ const store = {
       total: team.total
     }
     if (this.debug) console.log(this.state.teams[i]);
-  },
-  updateMeta(note, value) {
-    if (this.debug) console.log(`Updating '${note}' in the store!`);
-
-    this.state[note] = value;
   }
 }

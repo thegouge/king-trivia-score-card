@@ -3,16 +3,29 @@ export const app = Vue.component("app", {
   <div id="app">
     <h1>King Trivia Score Card</h1>
 
-    <button @click="showStandings">Show Standings</button>
+    <ul id="tab-bar">
+        <li class="tab" v-for="(tab, index) in tabs" @click="selectedTab = tab" v-bind:key="index" v-bind:class="{ activeTab: selectedTab === tab }">
+          {{ tab }}
+        </li>
+    </ul>
 
-    <standings v-if="placings" @close-standings="closePlacings"></standings>
+    <br>
 
-    <score-board v-bind:rounds="rounds"></score-board>
+    <main>
+      <score-board v-show='selectedTab === "Score Board"' v-bind:rounds="rounds" />
+
+      <curr-round v-show='selectedTab === "Current Round"' v-bind:rounds="rounds" />
+
+      <standings v-show='selectedTab === "Standings"' v-bind:selectedTab="selectedTab" />
+
+    </main>
+
   </div>
   `,
   data() {
     return {
-      placings: false,
+      tabs: ["Score Board", "Current Round", "Standings"],
+      selectedTab: "Score Board",
       rounds: [{
           number: 1,
           questions: 6
@@ -44,39 +57,5 @@ export const app = Vue.component("app", {
       ],
       shared: store
     };
-  },
-  methods: {
-    showStandings() {
-      let sorted = store.state.teams.sort((a, b) => {
-        let first = parseInt(a.total);
-        let second = parseInt(b.total);
-        if (first < second) {
-          return 1;
-        } else if (second < first) {
-          return -1;
-        }
-        return 0;
-      });
-      sorted.forEach((team, index) => {
-        switch (index) {
-          case 0:
-            team.place = "1st";
-            break;
-          case 1:
-            team.place = "2nd";
-            break;
-          case 2:
-            team.place = "3rd";
-            break;
-          default:
-            team.place = `${index + 1}th`;
-            break;
-        }
-      });
-      this.placings = true;
-    },
-    closePlacings() {
-      this.placings = false;
-    }
   }
 });
