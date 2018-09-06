@@ -4,11 +4,11 @@ const store = {
     metaData: {
       date: "",
       location: "",
-      arrival: "",
+      arrive: "",
       start: "",
       teamNum: "",
       players: "",
-      mtTables: "",
+      empty: "",
       internal: ""
     },
     teams: [{
@@ -65,7 +65,9 @@ const store = {
     }
     if (this.debug) console.log(this.state.teams[i]);
   },
-  updateMeta(notes) {
-    if (this.debug) console.log(notes);
+  updateMeta(note, value) {
+    if (this.debug) console.log(`Updating '${note}' in the store!`);
+
+    this.state[note] = value;
   }
 }
