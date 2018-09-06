@@ -49,7 +49,8 @@ export const meta = Vue.component("meta-notes", {
       triviaStart: "",
       numPlayers: 0,
       mtTables: 0,
-      otherNotes: ""
+      otherNotes: "",
+      shared: store
     }
   },
   computed: {
@@ -58,18 +59,16 @@ export const meta = Vue.component("meta-notes", {
       return fullDay.substring(0, 10);
     },
     numTeams() {
-      return this.teamArray.length;
+      return this.shared.state.teams.length;
     }
   },
-  props: {
-    teamArray: {
-      type: Array,
-      required: false
-    }
-  },
+  props: {},
   methods: {
     select(arg) {
       document.getElementById(arg).select();
+    },
+    updateMeta() {
+      store.updateMeta(this.$refs.metaNotes);
     }
   }
 });

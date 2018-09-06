@@ -11,7 +11,21 @@ const store = {
       mtTables: "",
       internal: ""
     },
-    teams: []
+    teams: [{
+        total: 0
+      },
+      {
+        total: 0
+      },
+      {
+        total: 0
+      }
+    ]
+  },
+  addTeam() {
+    this.state.teams.push({
+      total: 0
+    });
   },
   updateTeam(team, i) {
     if (this.debug) console.log(`updating ${team.name} in the store!`);

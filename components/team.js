@@ -1,9 +1,7 @@
 export const team = Vue.component("team", {
   template: `
     <tr class="team-line">
-      <td class="team-box">
-        {{ index + 1 }}.
-        <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')" v-model="teamNum">
+      <td class="team-box">{{ index + 1 }}. <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')" v-model="teamNum">
       </td>
       <td class="name">
         <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf" @click="select('team-name')" tabindex="1">
@@ -22,30 +20,37 @@ export const team = Vue.component("team", {
       rounds: [{
           number: 1,
           gained: 0,
+          double: false
         },
         {
           number: 2,
-          gained: 0
+          gained: 0,
+          double: false
         },
         {
           number: 3,
-          gained: 0
+          gained: 0,
+          double: false
         },
         {
           number: 4,
-          gained: 0
+          gained: 0,
+          correct: null
         },
         {
           number: 5,
-          gained: 0
+          gained: 0,
+          double: false
         },
         {
           number: 6,
-          gained: 0
+          gained: 0,
+          double: false
         },
         {
           number: 7,
-          gained: 0
+          gained: 0,
+          double: false
         }
       ],
     };
@@ -53,6 +58,12 @@ export const team = Vue.component("team", {
   computed: {
     total() {
       return this.rounds.reduce((tot, round) => tot + parseInt(round.gained), 0);
+    }
+  },
+  props: {
+    index: {
+      type: Number,
+      required: true
     }
   },
   methods: {
@@ -64,7 +75,7 @@ export const team = Vue.component("team", {
       return result;
     },
     updateSelf() {
-      this.$emit("total-change", this);
+      store.updateTeam(this, this.index);
     },
     select(arg) {
       let id;
@@ -76,12 +87,6 @@ export const team = Vue.component("team", {
 
       let element = document.getElementById(id);
       element.select();
-    }
-  },
-  props: {
-    index: {
-      type: Number,
-      required: true
     }
   }
 });

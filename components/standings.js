@@ -5,16 +5,15 @@ export const stand = Vue.component("standings", {
         <span class="close-btn" @click="closeStandings">&times;</span>
         <h2 id="ranking-title">Team Rankings</h2>
         <ul>
-          <li v-for="(team, index) in teamArray" v-bind:key="index">in {{ team.place }} place: "{{ team.name }}" with {{ team.total }} points!</li>
+          <li v-for="(team, index) in this.shared.state.teams" v-bind:key="index">in {{ team.place }} place: "{{ team.name }}" with {{ team.total }} points!</li>
         </ul>
       </div>
     </div>
   `,
-  props: {
-    teamArray: {
-      type: Array,
-      required: true
-    }
+  data() {
+    return {
+      shared: store
+    };
   },
   methods: {
     closeStandings() {

@@ -2,56 +2,52 @@ export const app = Vue.component("app", {
   template: `
   <div id="app">
     <h1>King Trivia Score Card</h1>
-    <meta-notes v-bind:teamArray="teamArray" ref="metaNotes"></meta-notes>
 
-    <div id="toolbar">
-      <button @click="addTeam">Add Team</button>
-      <button @click="showStandings">Show Standings</button>
-      <button @click="exportFile">Export</button>
-    </div>
+    <button @click="showStandings">Show Standings</button>
 
-    <standings v-bind:teamArray="teamArray" v-if="placings" @close-standings="closePlacings"></standings>
+    <standings v-if="placings" @close-standings="closePlacings"></standings>
 
-    <score-board v-bind:teamArray="teamArray" @passed="upTeam"></score-board>
+    <score-board v-bind:rounds="rounds"></score-board>
   </div>
   `,
   data() {
     return {
-      teamArray: [{
-        name: "",
-        place: "",
-        total: 0
-      }, {
-        name: "",
-        place: "",
-        total: 0
-      }, {
-        name: "",
-        place: "",
-        total: 0
-      }],
       placings: false,
+      rounds: [{
+          number: 1,
+          questions: 6
+        },
+        {
+          number: 2,
+          questions: 8
+        },
+        {
+          number: 3,
+          questions: 6
+        },
+        {
+          number: 4,
+          questions: 1
+        },
+        {
+          number: 5,
+          questions: 10
+        },
+        {
+          number: 6,
+          questions: 10
+        },
+        {
+          number: 7,
+          questions: 10
+        },
+      ],
       shared: store
     };
   },
   methods: {
-    addTeam() {
-      this.teamArray.push({
-        name: "",
-        place: "",
-        total: 0
-      });
-    },
-    upTeam(team, index) {
-      this.teamArray[index] = {
-        name: team.name,
-        place: "",
-        total: team.total
-      };
-      store.updateTeam(team, index);
-    },
     showStandings() {
-      let sorted = this.teamArray.sort((a, b) => {
+      let sorted = store.state.teams.sort((a, b) => {
         let first = parseInt(a.total);
         let second = parseInt(b.total);
         if (first < second) {
@@ -81,9 +77,6 @@ export const app = Vue.component("app", {
     },
     closePlacings() {
       this.placings = false;
-    },
-    exportFile() {
-      store.updateMeta(this.$refs.metaNotes);
     }
   }
 });
