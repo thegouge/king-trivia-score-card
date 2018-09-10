@@ -11,16 +11,8 @@ const store = {
       empty: "",
       internal: ""
     },
-    teams: [{
-        total: 0
-      },
-      {
-        total: 0
-      },
-      {
-        total: 0
-      }
-    ]
+    teams: [],
+    rankedTeams: []
   },
   addTeam() {
     this.state.teams.push({
@@ -68,6 +60,36 @@ const store = {
       ],
       total: team.total
     }
-    if (this.debug) console.log(this.state.teams[i]);
+    this.updateStandings();
+    console.log(this.state.rankedTeams);
+  },
+  updateStandings() {
+    let sorted = this.state.teams.sort((a, b) => {
+      let first = parseInt(a.total);
+      let second = parseInt(b.total);
+      if (first < second) {
+        return 1;
+      } else if (second < first) {
+        return -1;
+      }
+      return 0;
+    });
+    sorted.forEach((team, index) => {
+      switch (index) {
+        case 0:
+          team.place = "1st";
+          break;
+        case 1:
+          team.place = "2nd";
+          break;
+        case 2:
+          team.place = "3rd";
+          break;
+        default:
+          team.place = `${index + 1}th`;
+          break;
+      }
+    });
+    this.state.rankedTeams = sorted;
   }
 }

@@ -175,3 +175,7 @@ td {
 .activeTab:after {
   box-shadow: -2px 2px 0 white;
 }
+
+#round-title {
+  display: inline-block;
+}
