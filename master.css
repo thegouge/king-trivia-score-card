@@ -177,5 +177,9 @@ td {
 }
 
 #round-title {
+  /* display: inline-block; */
+}
+
+.round-header {
   display: inline-block;
 }
