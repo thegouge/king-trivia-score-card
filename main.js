@@ -56,5 +56,8 @@ export const main = new Vue({
       },
     ],
     shared: store
+  },
+  methods: {
+
   }
 });
