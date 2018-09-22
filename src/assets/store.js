@@ -1,4 +1,4 @@
-const store = {
+export default {
   debug: true,
   state: {
     metaData: {
@@ -16,6 +16,30 @@ const store = {
   },
   addTeam() {
     this.state.teams.push({
+      name: "",
+      teamNum: "",
+      rounds: [{
+        number: 1,
+        gained: 0
+      }, {
+        number: 2,
+        gained: 0
+      }, {
+        number: 3,
+        gained: 0
+      }, {
+        number: 4,
+        gained: 0
+      }, {
+        number: 5,
+        gained: 0
+      }, {
+        number: 6,
+        gained: 0
+      }, {
+        number: 7,
+        gained: 0
+      }],
       total: 0
     });
   },
@@ -67,11 +91,13 @@ const store = {
       ],
       total: team.total
     }
+    // console.log(this.state.teams);
     this.updateStandings();
-    console.log(this.state.rankedTeams);
+    console.log(this.state.teams);
   },
   updateStandings() {
-    let sorted = this.state.teams.sort((a, b) => {
+    this.state.rankedTeams = [...this.state.teams];
+    let sorted = this.state.rankedTeams.sort((a, b) => {
       let first = parseInt(a.total);
       let second = parseInt(b.total);
       if (first < second) {
@@ -81,19 +107,19 @@ const store = {
       }
       return 0;
     });
-    sorted.forEach((team, index) => {
+    sorted.forEach((orderedTeam, index) => {
       switch (index) {
         case 0:
-          team.place = "1st";
+          orderedTeam.place = "1st";
           break;
         case 1:
-          team.place = "2nd";
+          orderedTeam.place = "2nd";
           break;
         case 2:
-          team.place = "3rd";
+          orderedTeam.place = "3rd";
           break;
         default:
-          team.place = `${index + 1}th`;
+          orderedTeam.place = `${index + 1}th`;
           break;
       }
     });
@@ -102,5 +128,6 @@ const store = {
   gradeRound(round, teamIndex, score) {
     this.state.teams[teamIndex].rounds[round - 1].gained = score;
     this.state.teams[teamIndex].rounds[round - 1].graded = true;
+    this.$emit("test");
   }
 }
