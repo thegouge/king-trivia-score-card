@@ -4,7 +4,7 @@ export const team = Vue.component("team", {
       <td class="team-box">{{ index + 1 }}. <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')" v-model="teamNum">
       </td>
       <td class="name">
-        <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf" @click="select('team-name')" tabindex="1">
+        <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf()" @click="select('team-name')" tabindex="1">
       </td>
       <td class="round-score" v-for="(round, roundIndex) in rounds" v-bind:key="roundIndex">
         <input type="number" class="score" :id="'score-' + index + '-' + round.number" min="-1" max="25" @change="updateSelf" v-model="rounds[roundIndex].gained" @click="select('score', round.number)" :tabindex="roundIndex + 2">
