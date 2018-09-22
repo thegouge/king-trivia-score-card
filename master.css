@@ -67,24 +67,6 @@ td {
   padding: 0;
 }
 
-#rank-modal {
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.4);
-}
-
-#rank-box {
-  width: 50%;
-  background: white;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 10px;
-}
-
 .close-btn {
   float: right;
   user-select: none;
@@ -174,10 +156,6 @@ td {
 
 .activeTab:after {
   box-shadow: -2px 2px 0 white;
-}
-
-#round-title {
-  /* display: inline-block; */
 }
 
 .round-header {

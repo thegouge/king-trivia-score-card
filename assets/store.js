@@ -31,31 +31,38 @@ const store = {
       teamNum: team.teamNum,
       rounds: [{
           number: 1,
-          gained: parseInt(team.rounds[0].gained)
+          gained: parseInt(team.rounds[0].gained),
+          double: team.rounds[0].double
         },
         {
           number: 2,
-          gained: parseInt(team.rounds[1].gained)
+          gained: parseInt(team.rounds[1].gained),
+          double: team.rounds[1].double
         },
         {
           number: 3,
-          gained: parseInt(team.rounds[2].gained)
+          gained: parseInt(team.rounds[2].gained),
+          double: team.rounds[2].double
         },
         {
           number: 4,
-          gained: parseInt(team.rounds[3].gained)
+          gained: parseInt(team.rounds[3].gained),
+          double: team.rounds[3].double
         },
         {
           number: 5,
-          gained: parseInt(team.rounds[4].gained)
+          gained: parseInt(team.rounds[4].gained),
+          double: team.rounds[4].double
         },
         {
           number: 6,
-          gained: parseInt(team.rounds[5].gained)
+          gained: parseInt(team.rounds[5].gained),
+          double: team.rounds[5].double
         },
         {
           number: 7,
-          gained: parseInt(team.rounds[6].gained)
+          gained: parseInt(team.rounds[6].gained),
+          double: team.rounds[6].double
         }
       ],
       total: team.total
@@ -91,5 +98,9 @@ const store = {
       }
     });
     this.state.rankedTeams = sorted;
+  },
+  gradeRound(round, teamIndex, score) {
+    this.state.teams[teamIndex].rounds[round - 1].gained = score;
+    this.state.teams[teamIndex].rounds[round - 1].graded = true;
   }
 }

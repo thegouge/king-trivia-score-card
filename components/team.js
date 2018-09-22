@@ -20,37 +20,30 @@ export const team = Vue.component("team", {
       rounds: [{
           number: 1,
           gained: 0,
-          double: false
         },
         {
           number: 2,
           gained: 0,
-          double: false
         },
         {
           number: 3,
           gained: 0,
-          double: false
         },
         {
           number: 4,
           gained: 0,
-          correct: null
         },
         {
           number: 5,
           gained: 0,
-          double: false
         },
         {
           number: 6,
           gained: 0,
-          double: false
         },
         {
           number: 7,
           gained: 0,
-          double: false
         }
       ],
     };
@@ -63,6 +56,9 @@ export const team = Vue.component("team", {
   props: {
     index: {
       type: Number,
+      required: true
+    },
+    data: {
       required: true
     }
   },
