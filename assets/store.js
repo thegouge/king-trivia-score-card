@@ -16,6 +16,30 @@ const store = {
   },
   addTeam() {
     this.state.teams.push({
+      name: "",
+      teamNum: "",
+      rounds: [{
+        number: 1,
+        gained: 0
+      }, {
+        number: 2,
+        gained: 0
+      }, {
+        number: 3,
+        gained: 0
+      }, {
+        number: 4,
+        gained: 0
+      }, {
+        number: 5,
+        gained: 0
+      }, {
+        number: 6,
+        gained: 0
+      }, {
+        number: 7,
+        gained: 0
+      }],
       total: 0
     });
   },
