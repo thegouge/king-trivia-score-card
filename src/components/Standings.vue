@@ -21,19 +21,28 @@ export default {
   },
   methods: {
     rankTeam(teamToRank) {
-      switch (this.rankedTeams.indexOf(teamToRank)) {
-        case 0:
-          return "1st";
-          break;
-        case 1:
-          return "2nd";
-          break;
-        case 2:
-          return "3rd";
-          break;
-        default:
-          return `${index + 1}th`;
-          break;
+      const placing = this.rankedTeams.indexOf(teamToRank) + 1;
+      const lastNum = placing.toString().slice(-1);
+      console.log(lastNum);
+      if(placing === 11 || placing === 12 || placing === 13) {
+        return `${placing}th`;
+      } else {
+        switch(lastNum) {
+          case "1":
+            return `${placing}st`;
+            break;
+
+          case "2":
+            return `${placing}nd`;
+            break;
+          
+          case "3":
+            return `${placing}rd`;
+            break;
+
+          default:
+            return `${placing}th`;
+        }
       }
     }
   }
