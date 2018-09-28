@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import store from "../assets/store";
-
 export default {
   name: "MetaNotes",
   data() {
@@ -54,8 +52,7 @@ export default {
       triviaStart: "",
       numPlayers: 0,
       mtTables: 0,
-      otherNotes: "",
-      shared: store
+      otherNotes: ""
     }
   },
   computed: {
@@ -64,7 +61,7 @@ export default {
       return fullDay.substring(0, 10);
     },
     numTeams() {
-      return this.shared.state.teams.length;
+      return this.$store.state.teams.length;
     }
   },
   props: {},
@@ -73,8 +70,8 @@ export default {
       document.getElementById(arg).select();
     },
     updateSelf(note) {
-      let node = document.getElementById(note);
-      store.updateMeta(note, node.value);
+      // let node = document.getElementById(note);
+      // store.updateMeta(note, node.value);
     }
   }
 }

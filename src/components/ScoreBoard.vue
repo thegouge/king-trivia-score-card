@@ -14,7 +14,7 @@
         <th class="round-num" v-for="(round, index) in rounds" :key="index">Round {{ round.number }}</th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
-        <team v-for="(team, index) in teamsArray" v-bind:key="index" v-bind:index="index" v-bind:teamData="teamsArray[index]" />
+        <team v-for="(team, index) in teamsArray" :key="index" v-bind:index="index" />
     </table>
     </div>
 </template>
@@ -22,7 +22,6 @@
 <script>
 import MetaNotes from "./MetaNotes";
 import Team from "./Team";
-import store from "../assets/store";
 
 export default {
   name: "scoreBoard",
@@ -30,15 +29,9 @@ export default {
     MetaNotes,
     Team
   },
-  data() {
-    return {
-      placings: false,
-      shared: store
-    }
-  },
   computed: {
     teamsArray() {
-      return this.shared.state.teams;
+      return this.$store.state.teams;
     }
   },
   props: {
@@ -49,8 +42,7 @@ export default {
   },
   methods: {
     addTeam() {
-      console.log
-      this.shared.addTeam();
+      this.$store.commit('pushTeam');
     },
     exportFile() {
       alert("Not functional yet!");

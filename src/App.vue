@@ -25,7 +25,6 @@
 import ScoreBoard from "./components/ScoreBoard";
 import CurrRound from "./components/CurrRound";
 import Standings from "./components/Standings";
-import store from "./assets/store";
 
 export default {
   name: 'App',
@@ -66,8 +65,7 @@ export default {
           number: 7,
           questions: 10
         },
-      ],
-      shared: store
+      ]
     }
   },
   methods: {}

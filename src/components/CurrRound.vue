@@ -10,7 +10,7 @@
         <label for="curr-team">Choose a Team to Grade</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="(team, index) in shared.state.teams" :key="index" :value="team.name"> {{ team.name }} </option>
+            <option v-for="(team, index) in teamArray" :key="index" :value="team.name"> {{ team.name }} </option>
           </datalist>
 
         <label for="num-right">Number of Questions Correct:</label>
@@ -26,7 +26,7 @@
         <label for="curr-team">Choose a Team to Grade</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="(team, index) in shared.state.teams" :key="index" :value="team.name"> {{ team.name }} </option>
+            <option v-for="(team, index) in teamArray" :key="index" :value="team.name"> {{ team.name }} </option>
           </datalist>
 
         <label for="guess">How Was Their Guess?</label>
@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import store from "../assets/store";
-
 export default {
   name: "CurrRound",
   data() {
@@ -61,16 +59,18 @@ export default {
       current: 1,
       teamName: "",
       teamRight: null,
-      double: false,
-      shared: store
+      double: false
     }
   },
   computed: {
+    teamArray() {
+      return this.$store.state.teams;
+    },
     currentRound() {
       return this.rounds[this.current - 1];
     },
     graded() {
-      return this.shared.state.teams.filter((team) => {
+      return this.teamArray.filter(team => {
         return team.rounds[this.current - 1].graded;
       });
     }
@@ -89,7 +89,7 @@ export default {
       this.current--;
     },
     scoreRound() {
-      let teamNameArray = this.shared.state.teams.map((team) => team.name);
+      let teamNameArray = this.teamArray.map((team) => team.name);
       let thisTeamIndex = teamNameArray.indexOf(this.teamName);
       if (thisTeamIndex < 0) {
         alert(`"${this.teamName}" is not a team!`);
