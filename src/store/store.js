@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
   },
   getters: {
     rankedTeams(state) {
-      return _.sortBy(state.teams, team => team.total);
+      return _.sortBy(state.teams, team => team.total).reverse();
     }
   },
   mutations: {
@@ -72,8 +72,17 @@ export const store = new Vuex.Store({
       state.teams[payload.index].rounds[payload.round - 1].gained =
         payload.score;
       state.teams[payload.index].rounds[payload.round - 1].graded = true;
-      state.teams[payload.index].total = payload.newTotal;
-      // Vue.set(this.getters, "rankedTeams");
+      const newTotal = state.teams[payload.index].rounds.reduce(
+        (total, round) => {
+          if (round.number === payload.round) {
+            return total + payload.score;
+          } else {
+            return total + round.gained;
+          }
+        },
+        0
+      );
+      state.teams[payload.index].total = newTotal;
     }
   },
   actions: {}

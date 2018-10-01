@@ -67,20 +67,12 @@ export default {
       return result;
     },
     updateRound(event) {
-      let roundScore = parseInt(event.target.value);
-      let roundToScore = parseInt(event.target.id.slice(-1));
-      let componentTotal = this.rounds.reduce((total, round) => {
-        if(round.number === roundToScore) {
-          return total + roundScore;
-        } else {
-          return total + round.gained;
-        }
-      }, 0);
+      const roundScore = parseInt(event.target.value);
+      const roundToScore = parseInt(event.target.id.slice(-1));
       this.$store.commit('updateRounds', {
         round: roundToScore, 
         score: roundScore, 
-        index: this.index, 
-        newTotal: componentTotal
+        index: this.index
       });
     },
     select(arg) {

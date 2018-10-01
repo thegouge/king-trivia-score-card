@@ -11,11 +11,15 @@
     <br>
 
     <main>
-      <ScoreBoard v-show='selectedTab === "Score Board"' v-bind:rounds="rounds" />
+      <ScoreBoard v-show='selectedTab === "Score Board"' :rounds="rounds" />
 
-      <CurrRound v-show='selectedTab === "Current Round"' v-bind:rounds="rounds" />
+      <CurrRound v-show='selectedTab === "Current Round"' :rounds="rounds" />
 
-      <Standings v-show='selectedTab === "Standings"' v-bind:selectedTab="selectedTab" />
+      <Standings v-show='selectedTab === "Standings"' />
+
+      <CoinFlip v-show='selectedTab === "Coin Flip"' />
+
+      <Timer v-show='selectedTab === "Timer"' />
 
     </main>
   </div>
@@ -25,17 +29,21 @@
 import ScoreBoard from "./components/ScoreBoard";
 import CurrRound from "./components/CurrRound";
 import Standings from "./components/Standings";
+import CoinFlip from "./components/CoinFlip";
+import Timer from "./components/Timer";
 
 export default {
   name: 'App',
   components: {
     ScoreBoard,
     CurrRound,
-    Standings
+    Standings,
+    CoinFlip,
+    Timer
   },
   data() {
     return {
-      tabs: ["Score Board", "Current Round", "Standings"],
+      tabs: ["Score Board", "Current Round", "Standings", "Coin Flip", "Timer"],
       selectedTab: "Score Board",
       rounds: [{
           number: 1,

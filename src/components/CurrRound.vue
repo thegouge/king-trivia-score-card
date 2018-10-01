@@ -1,46 +1,62 @@
 <template>
-  <div>
+  <div id="curr-round">
       <div id="round-title">
-        <button class="round-header" v-if="current > 1" @click="previousRound"> &larr; </button>
+        <button class="round-header round-button" v-if="current > 1" @click="previousRound"> &larr; </button>
+        <div class="button-sub" v-else></div>
         <h2 class="round-header">Round {{ current }}</h2>
-        <button class="round-header" v-if="current < 7" @click="nextRound"> &rarr; </button>
+        <button class="round-header round-button" v-if="current < 7" @click="nextRound"> &rarr; </button>
+        <div class="button-sub" v-else></div>
       </div>
 
-      <form v-if="current != 4" id="round-form" v-on:submit.prevent>
-        <label for="curr-team">Choose a Team to Grade</label>
-          <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
+      <h3 class="done-grading" v-if="graded.length === this.$store.state.teams.length">- All teams have been graded! -</h3>
+
+      <form id="round-form" v-on:submit.prevent>
+        <label for="curr-team">Choose a team to grade</label>
+          <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" @change="reset" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="(team, index) in teamArray" :key="index" :value="team.name"> {{ team.name }} </option>
+            <option v-for="(team, index) in this.$store.state.teams" :key="index" :value="team.teamName" />
           </datalist>
 
-        <label for="num-right">Number of Questions Correct:</label>
-        <input type="number" id="num-right" min="0" :max="currentRound.questions" v-model="teamRight">
+        <br>
+        
+        <div v-if="current != 4">
+          <label for="num-right">Number of questions correct:</label>
+          <input type="number" id="num-right" min="0" :max="currentRound.questions" v-model="teamRight">
 
-        <label for="double">Double Down?</label>
-        <input type="checkbox" v-model="double" />
+          <br>
 
-        <button @click="scoreRound">Submit</button>
-      </form>
+          <label for="double">Double Down?</label>
+          <input type="checkbox" v-model="double" />
 
-      <form v-else id="round-4-form" v-on:submit.prevent>
-        <label for="curr-team">Choose a Team to Grade</label>
-          <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
-          <datalist id="curr-team-list">
-            <option v-for="(team, index) in teamArray" :key="index" :value="team.name"> {{ team.name }} </option>
-          </datalist>
+          <div v-if="current <= 3">
+            <label for="registered">What's their team number?</label>
+            <input type="number" v-model="teamNum" name="registered" max="99999">
+          </div>
 
-        <label for="guess">How Was Their Guess?</label>
-          <input type="radio" name="guess" id="right-guess" value="right">
-          <input type="radio" name="guess" id="wrong-guess" value="wrong">
+          <div v-if="current === 7">
+            <label for="sevTotal">How many questions are there in this round?</label>
+            <input type="number" v-model="sevenTotal" id="sevTotal" max="10" value="10">
 
-        <label for="clues">Which Clue were you on?</label>
-          <input type="radio" name="clue" value="10" />
-          <input type="radio" name="clue" value="8" />
-          <input type="radio" name="clue" value="6" />
-          <input type="radio" name="clue" value="4" />
-          <input type="radio" name="clue" value="2" />
+            <label for="pen">Did they turn in their pen?</label>
+            <input type="checkbox" name="pen">
+          </div>
+        </div>
 
-        <button @click="scoreRound">Submit</button>
+        <div v-if="current === 4">
+          <label for="person-points">How many points did they get?</label>
+          <select id="person-points" v-model="personPoints">
+            <option value="10">10pts</option>
+            <option value="8">8pts</option>
+            <option value="6">6pts</option>
+            <option value="4">4pts</option>
+            <option value="2">2pts</option>
+            <option value="0" selected>0pts</option>
+            <option value="-1">-1pts</option>
+          </select>
+        </div>
+
+        <br>
+        <button class="submit" @click="scoreRound">Submit</button>
       </form>
 
       <div class="graded-list">
@@ -57,20 +73,21 @@ export default {
   data() {
     return {
       current: 1,
-      teamName: "",
+      teamName: null,
+      teamNum: null,
       teamRight: null,
-      double: false
+      double: false,
+      personPoints: null,
+      sevenTotal: null,
+      penPoints: false
     }
   },
   computed: {
-    teamArray() {
-      return this.$store.state.teams;
-    },
     currentRound() {
       return this.rounds[this.current - 1];
     },
     graded() {
-      return this.teamArray.filter(team => {
+      return this.$store.state.teams.filter(team => {
         return team.rounds[this.current - 1].graded;
       });
     }
@@ -82,26 +99,52 @@ export default {
     }
   },
   methods: {
+    reset() {
+      this.teamNum = null;
+      this.teamRight = null;
+      this.double = false;
+      this.personPoints = null;
+    },
     nextRound() {
       this.current++;
+      this.reset();
+      this.sevenTotal = null;
     },
     previousRound() {
       this.current--;
+      this.reset();
+      this.sevenTotal = null;
     },
     scoreRound() {
-      let teamNameArray = this.teamArray.map((team) => team.name);
-      let thisTeamIndex = teamNameArray.indexOf(this.teamName);
-      if (thisTeamIndex < 0) {
+      const teamNameArray = this.$store.state.teams.map((team) => team.teamName);
+      const thisTeamIndex = teamNameArray.indexOf(this.teamName);
+      if(thisTeamIndex < 0) {
         alert(`"${this.teamName}" is not a team!`);
       } else {
-        let roundTotal = this.rounds[this.current - 1].questions;
+        let roundTotal = (this.current < 7) ? this.rounds[this.current - 1].questions : this.sevenTotal;
         let gradedScore = this.teamRight;
 
-        if (this.double) {
+        if(this.current === 4) {
+          gradedScore = this.personPoints;
+        }
+
+        if(this.double) {
           roundTotal > this.teamRight ? gradedScore = 0 : gradedScore = 2 * roundTotal;
         }
 
-        this.shared.gradeRound(this.current, thisTeamIndex, gradedScore);
+        if(this.current < 4 && this.teamNum) {
+          gradedScore = parseInt(gradedScore) + 2;
+          this.$store.commit('updateNum', {index: thisTeamIndex, value: this.teamNum});
+        }
+
+        this.$store.commit('updateRounds', {
+          index: thisTeamIndex, 
+          round: this.current, 
+          score: parseInt(gradedScore)
+        });
+
+        this.reset();
+        this.teamName = null;
       }
     }
   }
@@ -109,11 +152,54 @@ export default {
 </script>
 
 <style scoped>
+#curr-round {
+  --form-width: 30%;
+  --button-width: 30px;
+  --background-color: white;
+}
+
 .round-header {
   display: inline-block;
+  margin: 5px;
+  user-select: none;
 }
 
 #round-title {
+  display: flex;
+  width: var(--form-width);
+  justify-content: space-around;
+  padding: 10px;
+  margin: auto;
+}
+
+.round-button {
+  width: var(--button-width);
+}
+
+.button-sub {
+  width: var(--button-width);
+  margin: 5px;
+}
+
+.done-grading {
   text-align: center;
+  color: rgb(4, 172, 4);
+}
+
+form {
+  width: var(--form-width);
+  margin: auto;
+  padding: 20px;
+  border-radius: 5%;
+  border: 1px solid grey;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+}
+
+input {
+  display: block;
 }
 </style>
