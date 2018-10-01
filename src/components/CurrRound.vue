@@ -8,14 +8,22 @@
         <div class="button-sub" v-else></div>
       </div>
 
-      <h3 class="done-grading" v-if="graded.length === this.$store.state.teams.length">- All teams have been graded! -</h3>
+      <h3 class="done-grading" v-if="graded.length === teamArray.length">- All teams have been graded! -</h3>
 
       <form id="round-form" v-on:submit.prevent>
         <label for="curr-team">Choose a team to grade</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" @change="reset" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="(team, index) in this.$store.state.teams" :key="index" :value="team.teamName" />
+            <option v-for="(team, index) in teamArray" :key="index" :value="team.teamName" />
           </datalist>
+
+        <div v-if="current === 7">
+          <label for="sevTotal">How many questions are there in this round?</label>
+          <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
+
+          <label for="pen">Did they turn in their pen?</label>
+          <input type="checkbox" name="pen" v-model="penPoints">
+        </div>
 
         <br>
         
@@ -33,13 +41,6 @@
             <input type="number" v-model="teamNum" name="registered" max="99999">
           </div>
 
-          <div v-if="current === 7">
-            <label for="sevTotal">How many questions are there in this round?</label>
-            <input type="number" v-model="sevenTotal" id="sevTotal" max="10" value="10">
-
-            <label for="pen">Did they turn in their pen?</label>
-            <input type="checkbox" name="pen">
-          </div>
         </div>
 
         <div v-if="current === 4">
@@ -83,6 +84,9 @@ export default {
     }
   },
   computed: {
+    teamArray() {
+      return this.$store.state.teams;
+    },
     currentRound() {
       return this.rounds[this.current - 1];
     },
@@ -104,6 +108,7 @@ export default {
       this.teamRight = null;
       this.double = false;
       this.personPoints = null;
+      this.penPoints = false;
     },
     nextRound() {
       this.current++;
@@ -116,13 +121,15 @@ export default {
       this.sevenTotal = null;
     },
     scoreRound() {
-      const teamNameArray = this.$store.state.teams.map((team) => team.teamName);
+      const teamNameArray = this.teamArray.map((team) => team.teamName);
       const thisTeamIndex = teamNameArray.indexOf(this.teamName);
       if(thisTeamIndex < 0) {
         alert(`"${this.teamName}" is not a team!`);
       } else {
         let roundTotal = (this.current < 7) ? this.rounds[this.current - 1].questions : this.sevenTotal;
-        let gradedScore = this.teamRight;
+        let gradedScore = parseInt(this.teamRight);
+
+        console.log(typeof gradedScore);
 
         if(this.current === 4) {
           gradedScore = this.personPoints;
@@ -132,15 +139,19 @@ export default {
           roundTotal > this.teamRight ? gradedScore = 0 : gradedScore = 2 * roundTotal;
         }
 
-        if(this.current < 4 && this.teamNum) {
+        if(this.current < 4 && this.teamNum && !this.teamArray[thisTeamIndex].teamNum) {
           gradedScore = parseInt(gradedScore) + 2;
           this.$store.commit('updateNum', {index: thisTeamIndex, value: this.teamNum});
+        }
+
+        if(this.current === 7 && this.penPoints) {
+          gradedScore = gradedScore + 2;
         }
 
         this.$store.commit('updateRounds', {
           index: thisTeamIndex, 
           round: this.current, 
-          score: parseInt(gradedScore)
+          score: gradedScore
         });
 
         this.reset();

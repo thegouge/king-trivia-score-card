@@ -17,9 +17,9 @@
 
       <Standings v-show='selectedTab === "Standings"' />
 
-      <CoinFlip v-show='selectedTab === "Coin Flip"' />
-
       <Timer v-show='selectedTab === "Timer"' />
+
+      <CoinFlip v-show='selectedTab === "Coin Flip"' />
 
     </main>
   </div>
@@ -29,8 +29,8 @@
 import ScoreBoard from "./components/ScoreBoard";
 import CurrRound from "./components/CurrRound";
 import Standings from "./components/Standings";
-import CoinFlip from "./components/CoinFlip";
 import Timer from "./components/Timer";
+import CoinFlip from "./components/CoinFlip";
 
 export default {
   name: 'App',
@@ -38,12 +38,12 @@ export default {
     ScoreBoard,
     CurrRound,
     Standings,
-    CoinFlip,
-    Timer
+    Timer,
+    CoinFlip
   },
   data() {
     return {
-      tabs: ["Score Board", "Current Round", "Standings", "Coin Flip", "Timer"],
+      tabs: ["Score Board", "Current Round", "Standings", "Timer", "Coin Flip"],
       selectedTab: "Score Board",
       rounds: [{
           number: 1,
@@ -59,7 +59,6 @@ export default {
         },
         {
           number: 4,
-          questions: 1
         },
         {
           number: 5,

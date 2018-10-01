@@ -71,7 +71,12 @@ export const store = new Vuex.Store({
     updateRounds(state, payload) {
       state.teams[payload.index].rounds[payload.round - 1].gained =
         payload.score;
-      state.teams[payload.index].rounds[payload.round - 1].graded = true;
+
+      Vue.set(
+        state.teams[payload.index].rounds[payload.round - 1],
+        "graded",
+        true
+      );
       const newTotal = state.teams[payload.index].rounds.reduce(
         (total, round) => {
           if (round.number === payload.round) {
