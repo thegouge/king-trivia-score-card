@@ -1,7 +1,10 @@
 <template>
   <div id="coin-flip">
-    <h2 v-if="heads === null">Flip it!</h2>
     <button @click="flipCoin">Flip Coin</button>
+
+    <div id="flip-window" v-show="flipping">
+      <h3>Flipping...</h3>
+    </div>
     
     <div v-if="heads">
       <h2>Heads!</h2>
@@ -20,12 +23,17 @@ export default {
   name: "CoinFlip",
   data() {
     return {
-      heads: null
+      heads: null,
+      flipping: false
     }
   },
   methods: {
     flipCoin() {
-      (Math.random() >= 0.5) ? this.heads = true : this.heads = false
+      this.flipping = true;
+      setTimeout(() => {
+        (Math.random() >= 0.5) ? this.heads = true : this.heads = false
+        this.flipping = false;
+      }, 500);
     }
   }
 }

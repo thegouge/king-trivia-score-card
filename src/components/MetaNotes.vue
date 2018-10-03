@@ -8,8 +8,8 @@
       <input type="date" 
       id="date" 
       @click="select('date')" 
-      @change="updateSelf('date')" 
-      v-bind:value="today">
+      @change="updateSelf()" 
+      :value="today">
     </p>
 
     <p 
@@ -20,7 +20,7 @@
       id="location" 
       v-model="triviaLocation" 
       @click="select('location')"  
-      @change="updateSelf('location')">
+      @change="updateSelf()">
     </p>
 
     <p id="in-arr" 
@@ -29,7 +29,7 @@
       <input type="time" id="arrive" 
       v-model="arrivalTime" 
       @click="select('arrive')" 
-      @change="updateSelf('arrive')">
+      @change="updateSelf()">
     </p>
 
     <p id="in-start" 
@@ -38,7 +38,7 @@
       <input type="time" id="start" 
       v-model="arrivalTime" 
       @click="select('start')" 
-      @change="updateSelf('start')">
+      @change="updateSelf()">
     </p>
 
     <p id="in-teams" 
@@ -47,7 +47,7 @@
       <input type="number" id="teamNum" 
       v-bind:value="numTeams" 
       @click="select('num-teams')" 
-      @change="updateSelf('teamNum')">
+      @change="updateSelf()">
     </p>
 
     <p id="in-play" 
@@ -55,7 +55,7 @@
       <label for="players"># of Players</label>
       <input type="number" id="players" 
       @click="select('players')" 
-      @change="updateSelf('players')" 
+      @change="updateSelf()" 
       v-model="numPlayers">
     </p>
 
@@ -64,7 +64,7 @@
       <label for="empty">Empty Tables</label>
       <input type="number" id="empty" 
       @click="select('empty')" 
-      @change="updateSelf('empty')" 
+      @change="updateSelf()" 
       v-model="mtTables">
     </p>
 
@@ -73,7 +73,7 @@
       <label for="notes">Notes</label>
       <textarea id="internal" 
       @click="select('notes')" 
-      @change="updateSelf('internal')" 
+      @change="updateSelf()" 
       v-model="otherNotes"></textarea>
     </p>
   </form>
@@ -106,9 +106,8 @@ export default {
     select(arg) {
       document.getElementById(arg).select();
     },
-    updateSelf(note) {
-      // let node = document.getElementById(note);
-      // store.updateMeta(note, node.value);
+    updateSelf(a) {
+      
     }
   }
 }

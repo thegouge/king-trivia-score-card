@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
       empty: "",
       internal: ""
     },
-    teams: []
+    teams: [],
+    timer: 0
   },
   getters: {
     rankedTeams(state) {
