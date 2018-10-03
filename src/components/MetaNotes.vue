@@ -8,8 +8,7 @@
       <input type="date" 
       id="date" 
       @click="select('date')" 
-      @change="updateSelf()" 
-      :value="today">
+      v-model="today">
     </p>
 
     <p 
@@ -19,8 +18,7 @@
       <input type="text" 
       id="location" 
       v-model="triviaLocation" 
-      @click="select('location')"  
-      @change="updateSelf()">
+      @click="select('location')">
     </p>
 
     <p id="in-arr" 
@@ -28,8 +26,7 @@
       <label for="arrive">Arrival Time</label>
       <input type="time" id="arrive" 
       v-model="arrivalTime" 
-      @click="select('arrive')" 
-      @change="updateSelf()">
+      @click="select('arrive')">
     </p>
 
     <p id="in-start" 
@@ -37,8 +34,7 @@
       <label for="start">Start Time</label>
       <input type="time" id="start" 
       v-model="arrivalTime" 
-      @click="select('start')" 
-      @change="updateSelf()">
+      @click="select('start')">
     </p>
 
     <p id="in-teams" 
@@ -46,16 +42,14 @@
       <label for="teams"># of Teams</label>
       <input type="number" id="teamNum" 
       v-bind:value="numTeams" 
-      @click="select('num-teams')" 
-      @change="updateSelf()">
+      @click="select('num-teams')">
     </p>
 
     <p id="in-play" 
     class="in-field">
       <label for="players"># of Players</label>
       <input type="number" id="players" 
-      @click="select('players')" 
-      @change="updateSelf()" 
+      @click="select('players')"  
       v-model="numPlayers">
     </p>
 
@@ -63,8 +57,7 @@
     class="in-field">
       <label for="empty">Empty Tables</label>
       <input type="number" id="empty" 
-      @click="select('empty')" 
-      @change="updateSelf()" 
+      @click="select('empty')"  
       v-model="mtTables">
     </p>
 
@@ -72,8 +65,7 @@
     class="in-field">
       <label for="notes">Notes</label>
       <textarea id="internal" 
-      @click="select('notes')" 
-      @change="updateSelf()" 
+      @click="select('notes')"  
       v-model="otherNotes"></textarea>
     </p>
   </form>
@@ -83,22 +75,77 @@
 export default {
   name: "MetaNotes",
   data() {
-    return {
-      triviaLocation: "",
-      arrivalTime: "",
-      triviaStart: "",
-      numPlayers: 0,
-      mtTables: 0,
-      otherNotes: ""
-    }
+    return {}
   },
   computed: {
-    today() {
-      let fullDay = new Date().toISOString();
-      return fullDay.substring(0, 10);
+    today: {
+      get() {
+        if(!this.$store.state.metaData.date) {
+          let fullDay = new Date();
+          return `${fullDay.getFullYear()}-${('0' + (fullDay.getMonth() + 1)).slice(-2)}-${('0' + (fullDay.getDate())).slice(-2)}`;
+        } else {
+          return this.$store.state.metaData.date;
+        }
+      },
+      set(newDate) {
+        this.updateMeta('date', newDate);
+      }
     },
-    numTeams() {
-      return this.$store.state.teams.length;
+    triviaLocation: {
+      get() {
+        return this.$store.state.metaData.location;
+      },
+      set(newLoc) {
+        this.updateMeta('location', newLoc);
+      }
+    },
+    arrivalTime: {
+      get() {
+        return this.$store.state.metaData.arrive;
+      },
+      set(newArrive) {
+        this.updateMeta('arrive', newArrive);
+      }
+    },
+    triviaStart: {
+      get() {
+        return this.$store.state.metaData.start;
+      },
+      set(newStart) {
+        this.updateMeta('start', newStart);
+      }
+    },
+    numTeams: {
+      get() {
+        return this.$store.getters.numTeams;
+      },
+      set(newTeams) {
+        this.updateMeta('teams', newTeams);
+      }
+    },
+    numPlayers: {
+      get() {
+        return this.$store.state.metaData.players;
+      },
+      set(newPlayers) {
+        this.updateMeta('players', newPlayers);
+      }
+    },
+    mtTables: {
+      get() {
+        return this.$store.state.metaData.empty;
+      },
+      set(newTables) {
+        this.updateMeta('empty', newTables);
+      }
+    },
+    otherNotes: {
+      get() {
+        return this.$store.state.metaData.internal;
+      },
+      set(newNote) {
+        this.updateMeta('internal', newNote);
+      }
     }
   },
   props: {},
@@ -106,8 +153,8 @@ export default {
     select(arg) {
       document.getElementById(arg).select();
     },
-    updateSelf(a) {
-      
+    updateMeta(note, newValue) {
+      this.$store.commit("updateMeta", {noteToUpdate: note, value: newValue});
     }
   }
 }

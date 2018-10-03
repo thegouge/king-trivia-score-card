@@ -8,11 +8,11 @@ export const store = new Vuex.Store({
   strict: true,
   state: {
     metaData: {
-      date: "",
+      date: null,
       location: "",
       arrive: "",
       start: "",
-      teamNum: "",
+      teams: "",
       players: "",
       empty: "",
       internal: ""
@@ -23,6 +23,9 @@ export const store = new Vuex.Store({
   getters: {
     rankedTeams(state) {
       return _.sortBy(state.teams, team => team.total).reverse();
+    },
+    numTeams(state) {
+      return state.teams.length;
     }
   },
   mutations: {
@@ -89,6 +92,9 @@ export const store = new Vuex.Store({
         0
       );
       state.teams[payload.index].total = newTotal;
+    },
+    updateMeta(state, payload) {
+      state.metaData[payload.noteToUpdate] = payload.value;
     }
   },
   actions: {}
