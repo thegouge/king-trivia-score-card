@@ -4,17 +4,23 @@ import _ from "lodash";
 
 Vue.use(Vuex);
 
+const fullDay = new Date();
+
 export const store = new Vuex.Store({
   strict: true,
   state: {
     metaData: {
-      date: null,
+      date: `${fullDay.getFullYear()}-${("0" + (fullDay.getMonth() + 1)).slice(
+        -2
+      )}-${("0" + fullDay.getDate()).slice(-2)}`,
       location: "",
       arrive: "",
       start: "",
+      end: "",
       teams: "",
       players: "",
       empty: "",
+      quizRating: "",
       internal: ""
     },
     teams: [],
@@ -32,7 +38,7 @@ export const store = new Vuex.Store({
     pushTeam(state) {
       state.teams.push({
         teamName: "",
-        teamNum: "",
+        teamNum: "00000",
         rounds: [
           {
             number: 1,
@@ -99,17 +105,3 @@ export const store = new Vuex.Store({
   },
   actions: {}
 });
-
-// updateMeta(note, value) {
-//   if (this.debug) console.log(`Updating '${note}' in the store!`);
-
-//   this.state[note] = value;
-// },
-// updateTeam(team, i) {
-//   if (this.debug) console.log(`updating ${team.name} in the store!`);
-
-// gradeRound(round, teamIndex, score) {
-//   this.state.teams[teamIndex].rounds[round - 1].gained = score;
-//   this.state.teams[teamIndex].rounds[round - 1].graded = true;
-//   this.$emit("test");
-// }

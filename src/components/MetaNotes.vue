@@ -33,14 +33,22 @@
     class="in-field" >
       <label for="start">Start Time</label>
       <input type="time" id="start" 
-      v-model="arrivalTime" 
+      v-model="triviaStart" 
       @click="select('start')">
+    </p>
+
+    <p id="in-end" 
+    class="in-field" >
+      <label for="end">Ending Time</label>
+      <input type="time" id="end" 
+      v-model="triviaEnd" 
+      @click="select('end')">
     </p>
 
     <p id="in-teams" 
     class="in-field">
       <label for="teams"># of Teams</label>
-      <input type="number" id="teamNum" 
+      <input type="number" id="num-teams" 
       v-bind:value="numTeams" 
       @click="select('num-teams')">
     </p>
@@ -59,6 +67,18 @@
       <input type="number" id="empty" 
       @click="select('empty')"  
       v-model="mtTables">
+    </p>
+
+    <p id="in-rate" 
+    class="in-field">
+      <label for="rating">Rate the Questions!</label>
+      <select v-model="quizRating" id="rating">
+        <option value="5">5 -- Awesome!</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1 -- Lousy!</option>
+      </select>
     </p>
 
     <p id="in-notes" 
@@ -80,12 +100,7 @@ export default {
   computed: {
     today: {
       get() {
-        if(!this.$store.state.metaData.date) {
-          let fullDay = new Date();
-          return `${fullDay.getFullYear()}-${('0' + (fullDay.getMonth() + 1)).slice(-2)}-${('0' + (fullDay.getDate())).slice(-2)}`;
-        } else {
-          return this.$store.state.metaData.date;
-        }
+        return this.$store.state.metaData.date;
       },
       set(newDate) {
         this.updateMeta('date', newDate);
@@ -115,6 +130,14 @@ export default {
         this.updateMeta('start', newStart);
       }
     },
+    triviaEnd: {
+      get() {
+        return this.$store.state.metaData.end;
+      },
+      set(newStart) {
+        this.updateMeta('end', newStart);
+      }
+    },
     numTeams: {
       get() {
         return this.$store.getters.numTeams;
@@ -137,6 +160,14 @@ export default {
       },
       set(newTables) {
         this.updateMeta('empty', newTables);
+      }
+    },
+    quizRating: {
+      get() {
+        return this.$store.state.metaData.quizRating;
+      },
+      set(newTables) {
+        this.updateMeta('quizRating', newTables);
       }
     },
     otherNotes: {
@@ -163,7 +194,12 @@ export default {
 <style scoped>
 #top-notes {
   display: grid;
-  grid-template-areas: "a  e" "b  f" "c  g" "d  h";
+  grid-template-areas:
+    "a  e"
+    "b  f"
+    "c  g"
+    "d  h"
+    "i  j";
 }
 
 .in-field {
@@ -186,6 +222,10 @@ export default {
   grid-area: d;
 }
 
+#in-end {
+  grid-area: i;
+}
+
 #in-teams {
   grid-area: e;
 }
@@ -198,7 +238,11 @@ export default {
   grid-area: g;
 }
 
-#in-notes {
+#in-rate {
   grid-area: h;
+}
+
+#in-notes {
+  grid-area: j;
 }
 </style>

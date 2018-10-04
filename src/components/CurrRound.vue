@@ -139,7 +139,7 @@ export default {
           roundTotal > this.teamRight ? gradedScore = 0 : gradedScore = 2 * roundTotal;
         }
 
-        if(this.current < 4 && this.teamNum && !this.teamArray[thisTeamIndex].teamNum) {
+        if(this.current < 4 && parseInt(this.teamNum) > 0 && !this.teamArray[thisTeamIndex].teamNum) {
           gradedScore = parseInt(gradedScore) + 2;
           this.$store.commit('updateNum', {index: thisTeamIndex, value: this.teamNum});
         }
