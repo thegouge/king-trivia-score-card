@@ -1,5 +1,4 @@
-export const meta = Vue.component("meta-notes", {
-  template: `
+<template>
   <form id="top-notes" @submit.prevent="onSubmit">
       <p id="in-date" class="in-field">
         <label for="date">Date:</label>
@@ -41,7 +40,13 @@ export const meta = Vue.component("meta-notes", {
         <textarea id="internal" @click="select('notes')" v-model="otherNotes" @change="updateSelf('internal')"></textarea>
       </p>
     </form>
-  `,
+</template>
+
+<script>
+import store from "../assets/store";
+
+export default {
+  name: "MetaNotes",
   data() {
     return {
       triviaLocation: "",
@@ -72,4 +77,48 @@ export const meta = Vue.component("meta-notes", {
       store.updateMeta(note, node.value);
     }
   }
-});
+}
+</script>
+
+<style scoped>
+#top-notes {
+  display: grid;
+  grid-template-areas: "a  e" "b  f" "c  g" "d  h";
+}
+
+.in-field {
+  margin: 5px;
+}
+
+#in-date {
+  grid-area: a;
+}
+
+#in-loc {
+  grid-area: b;
+}
+
+#in-arr {
+  grid-area: c;
+}
+
+#in-start {
+  grid-area: d;
+}
+
+#in-teams {
+  grid-area: e;
+}
+
+#in-play {
+  grid-area: f;
+}
+
+#in-emp {
+  grid-area: g;
+}
+
+#in-notes {
+  grid-area: h;
+}
+</style>

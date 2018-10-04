@@ -17,7 +17,7 @@ export const scoreBoard = Vue.component("score-board", {
           <th class="round-num" v-for="round in rounds">Round {{ round.number }}</th>
           <th class="round-num" id="total-title">Total</th>
         </tr>
-          <team v-for="(team, index) in teams" v-bind:key="index" ref="tems" v-bind:index="index" v-bind:data="this.shared.teams[index]" />
+          <team v-for="(team, index) in this.shared.state.teams" v-bind:key="index" ref="tems" v-bind:index="index" v-bind:teamData="shared.state.teams[index]" />
       </table>
     </div>
   `,
@@ -35,6 +35,7 @@ export const scoreBoard = Vue.component("score-board", {
   },
   methods: {
     addTeam() {
+      console.log
       this.shared.addTeam();
     },
     exportFile() {
@@ -43,6 +44,7 @@ export const scoreBoard = Vue.component("score-board", {
   },
   computed: {
     teams() {
+      console.log(this.shared.state.teams);
       return this.shared.state.teams;
     }
   }

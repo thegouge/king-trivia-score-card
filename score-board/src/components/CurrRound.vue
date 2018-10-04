@@ -1,17 +1,16 @@
-export const round = Vue.component("curr-round", {
-  template: `
-    <div>
+<template>
+  <div>
       <div id="round-title">
-        <button class="round-header" v-if="current > 1" @click="previousRound"> <- </button>
+        <button class="round-header" v-if="current > 1" @click="previousRound"> &larr; </button>
         <h2 class="round-header">Round {{ current }}</h2>
-        <button class="round-header" v-if="current < 7" @click="nextRound"> -> </button>
+        <button class="round-header" v-if="current < 7" @click="nextRound"> &rarr; </button>
       </div>
 
       <form v-if="current != 4" id="round-form" v-on:submit.prevent>
         <label for="curr-team">Choose a Team to Grade</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="team in shared.state.teams" :value="team.name"> {{ team.name }} </option>
+            <option v-for="(team, index) in shared.state.teams" :key="index" :value="team.name"> {{ team.name }} </option>
           </datalist>
 
         <label for="num-right">Number of Questions Correct:</label>
@@ -23,34 +22,40 @@ export const round = Vue.component("curr-round", {
         <button @click="scoreRound">Submit</button>
       </form>
 
-      <form v-else="current == 4" id="round-4-form" v-on:submit.prevent>
+      <form v-else id="round-4-form" v-on:submit.prevent>
         <label for="curr-team">Choose a Team to Grade</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" autocomplete="off">
           <datalist id="curr-team-list">
-            <option v-for="team in shared.state.teams" :value="team.name"> {{ team.name }} </option>
+            <option v-for="(team, index) in shared.state.teams" :key="index" :value="team.name"> {{ team.name }} </option>
           </datalist>
 
         <label for="guess">How Was Their Guess?</label>
-          <input type="radio" name="guess" id="right-guess" value="right">correct</input>
-          <input type="radio" name="guess" id="wrong-guess" value="wrong">incorrect</input>
+          <input type="radio" name="guess" id="right-guess" value="right">
+          <input type="radio" name="guess" id="wrong-guess" value="wrong">
 
         <label for="clues">Which Clue were you on?</label>
-          <input type="radio" name="clue" value="10">10pt</input>
-          <input type="radio" name="clue" value="8">8pt</input>
-          <input type="radio" name="clue" value="6">6pt</input>
-          <input type="radio" name="clue" value="4">4pt</input>
-          <input type="radio" name="clue" value="2">2pt</input>
+          <input type="radio" name="clue" value="10" />
+          <input type="radio" name="clue" value="8" />
+          <input type="radio" name="clue" value="6" />
+          <input type="radio" name="clue" value="4" />
+          <input type="radio" name="clue" value="2" />
 
         <button @click="scoreRound">Submit</button>
       </form>
 
       <div class="graded-list">
         <ul>
-          <li v-for="team in graded">{{ team.name }} has been graded!</li>
+          <li v-for="(team, index) in graded" :key="index">{{ team.teamName }} has been graded!</li>
         </ul>
       </div>
     </div>
-  `,
+</template>
+
+<script>
+import store from "../assets/store";
+
+export default {
+  name: "CurrRound",
   data() {
     return {
       current: 1,
@@ -100,4 +105,15 @@ export const round = Vue.component("curr-round", {
       }
     }
   }
-});
+}
+</script>
+
+<style scoped>
+.round-header {
+  display: inline-block;
+}
+
+#round-title {
+  text-align: center;
+}
+</style>

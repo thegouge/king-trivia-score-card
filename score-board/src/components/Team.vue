@@ -1,10 +1,9 @@
-export const team = Vue.component("team", {
-  template: `
-    <tr class="team-line">
+<template>
+  <tr class="team-line">
       <td class="team-box">{{ index + 1 }}. <input type="number" class="team-num" :id="'team-num-' + index" min="10000" max="99999" @click="select('team-num')" v-model="teamNum">
       </td>
       <td class="name">
-        <input type="text" class="team-name" :id="'team-name-' + index" v-model="name" @change="updateSelf" @click="select('team-name')" tabindex="1">
+        <input type="text" class="team-name" :id="'team-name-' + index" v-model="teamName" @change="updateSelf" @click="select('team-name')" tabindex="1">
       </td>
       <td class="round-score" v-for="(round, roundIndex) in rounds" v-bind:key="roundIndex">
         <input type="number" class="score" :id="'score-' + index + '-' + round.number" min="-1" max="25" @change="updateSelf" v-model="rounds[roundIndex].gained" @click="select('score', round.number)" :tabindex="roundIndex + 2">
@@ -12,10 +11,16 @@ export const team = Vue.component("team", {
       </td>
       <td class="team-total">{{ total }}</td>
     </tr>
-  `,
+</template>
+
+<script>
+import store from "../assets/store";
+
+export default {
+  name: "Team",
   data() {
     return {
-      name: "",
+      teamName: "",
       teamNum: "00000",
       rounds: [{
           number: 1,
@@ -57,9 +62,6 @@ export const team = Vue.component("team", {
     index: {
       type: Number,
       required: true
-    },
-    data: {
-      required: true
     }
   },
   methods: {
@@ -85,4 +87,11 @@ export const team = Vue.component("team", {
       element.select();
     }
   }
-});
+}
+</script>
+
+<style >
+.team-line:nth-child(even) {
+  background: rgb(201, 201, 201);
+}
+</style>
