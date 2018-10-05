@@ -132,7 +132,7 @@ export default {
         console.log(typeof gradedScore);
 
         if(this.current === 4) {
-          gradedScore = this.personPoints;
+          gradedScore = parseInt(this.personPoints);
         }
 
         if(this.double) {
