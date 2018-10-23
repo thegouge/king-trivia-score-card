@@ -39,8 +39,7 @@ export const store = new Vuex.Store({
       state.teams.push({
         teamName: "",
         teamNum: "00000",
-        rounds: [
-          {
+        rounds: [{
             number: 1,
             gained: 0
           },
@@ -71,12 +70,15 @@ export const store = new Vuex.Store({
         ],
         total: 0
       });
+      this.commit("saveToLocal", "_autoSave");
     },
     updateName(state, payload) {
       state.teams[payload.index].teamName = payload.value;
+      this.commit("saveToLocal", "_autoSave");
     },
     updateNum(state, payload) {
       state.teams[payload.index].teamNum = payload.value;
+      this.commit("saveToLocal", "_autoSave");
     },
     updateRounds(state, payload) {
       state.teams[payload.index].rounds[payload.round - 1].gained =
@@ -98,10 +100,40 @@ export const store = new Vuex.Store({
         0
       );
       state.teams[payload.index].total = newTotal;
+      this.commit("saveToLocal", "_autoSave");
     },
     updateMeta(state, payload) {
       state.metaData[payload.noteToUpdate] = payload.value;
+    },
+    loadFromLocal(state, loadName) {
+      let newState = JSON.parse(localStorage.getItem(loadName));
+      if (newState) {
+        store.replaceState(newState);
+      }
+    },
+    saveToLocal(state, saveName) {
+      localStorage.setItem(saveName, JSON.stringify(state));
+    },
+    resetAutoSave(state) {
+      localStorage.removeItem("_autoSave");
+      store.replaceState({
+        metaData: {
+          date: `${fullDay.getFullYear()}-${("0" + (fullDay.getMonth() + 1)).slice(
+            -2
+          )}-${("0" + fullDay.getDate()).slice(-2)}`,
+          location: "",
+          arrive: "",
+          start: "",
+          end: "",
+          teams: "",
+          players: "",
+          empty: "",
+          quizRating: "",
+          internal: ""
+        },
+        teams: [],
+        timer: 0
+      });
     }
-  },
-  actions: {}
+  }
 });

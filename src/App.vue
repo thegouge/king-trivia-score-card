@@ -75,7 +75,9 @@ export default {
       ]
     }
   },
-  methods: {}
+  mounted() {
+    this.$store.commit('loadFromLocal', '_autoSave');
+  }
 }
 </script>
 

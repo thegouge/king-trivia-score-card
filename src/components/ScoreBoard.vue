@@ -3,6 +3,7 @@
     <MetaNotes />
       <div id="toolbar">
         <button @click="addTeam">Add Team</button>
+        <button @click="resetTheState">Reset</button>
         <button @click="exportFile">Export</button>
       </div>
 
@@ -74,6 +75,9 @@ ${metaState.date},${metaState.location},${metaState.arrive},${metaState.start},$
       }).join('\n');
 
       return metaCSV + teamsCSV;
+    },
+    resetTheState() {
+      this.$store.commit("resetAutoSave");
     }
   }
 }
