@@ -31,7 +31,7 @@ export default {
     flipCoin() {
       this.flipping = true;
       setTimeout(() => {
-        (Math.random() >= 0.5) ? this.heads = true : this.heads = false
+        (Math.random() > 0.5) ? this.heads = true : this.heads = false
         this.flipping = false;
       }, 500);
     }

@@ -46,31 +46,25 @@ export default {
       tabs: ["Score Board", "Current Round", "Standings", "Timer", "Coin Flip"],
       selectedTab: "Score Board",
       rounds: [{
-          number: 1,
-          questions: 6
+          number: 1
         },
         {
-          number: 2,
-          questions: 8
+          number: 2
         },
         {
-          number: 3,
-          questions: 6
+          number: 3
         },
         {
-          number: 4,
+          number: 4
         },
         {
-          number: 5,
-          questions: 10
+          number: 5
         },
         {
-          number: 6,
-          questions: 10
+          number: 6
         },
         {
-          number: 7,
-          questions: 10
+          number: 7
         },
       ]
     }
