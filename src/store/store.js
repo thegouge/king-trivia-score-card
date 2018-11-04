@@ -35,8 +35,8 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    pushTeam(state) {
-      state.teams.push({
+    pushTeam(state, payload) {
+      (payload) ? state.teams.push(payload): state.teams.push({
         teamName: "",
         teamNum: "00000",
         rounds: [{

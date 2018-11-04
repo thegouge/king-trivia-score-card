@@ -9,27 +9,20 @@
       </div>
 
       <h3 class="done-grading" v-if="graded.length === teamArray.length">- All teams have been graded! -</h3>
+      <h3 v-else>{{teamArray.length - graded.length}} more teams to grade!</h3>
 
       <form id="round-form" v-on:submit.prevent>
-        <label for="curr-team">Choose a team to grade</label>
+        <label for="curr-team">{{(this.current === 1) ? "Write a Team Name!" : "Choose a team to grade"}}</label>
           <input list="curr-team-list" id="curr-team" name="curr-team" v-model="teamName" @change="reset" autocomplete="off">
           <datalist id="curr-team-list">
             <option v-for="(team, index) in teamArray" :key="index" :value="team.teamName" />
           </datalist>
 
-        <div v-if="current === 7">
-          <label for="sevTotal">How many questions are there in this round?</label>
-          <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
-
-          <label for="pen">Did they turn in their pen?</label>
-          <input type="checkbox" name="pen" v-model="penPoints">
-        </div>
-
         <br>
         
         <div v-if="current != 4">
           <label for="num-right">Number of questions correct:</label>
-          <input type="number" id="num-right" min="0" :max="currentRound.questions" v-model="teamRight">
+          <input type="number" id="num-right" min="0" :max="roundTotal" v-model="teamRight">
 
           <br>
 
@@ -40,6 +33,15 @@
             <label for="registered">What's their team number?</label>
             <input type="number" v-model="teamNum" name="registered" max="99999">
           </div>
+
+        </div>
+
+        <div v-if="current === 7">
+          <label for="pen">Did they turn in their pen?</label>
+          <input type="checkbox" name="pen" v-model="penPoints">
+
+          <label for="sevTotal">How many questions are there in this round?</label>
+          <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
 
         </div>
 
@@ -79,7 +81,7 @@ export default {
       teamRight: null,
       double: false,
       personPoints: null,
-      sevenTotal: null,
+      sevenTotal: 10,
       penPoints: false
     }
   },
@@ -87,19 +89,45 @@ export default {
     teamArray() {
       return this.$store.state.teams;
     },
-    currentRound() {
-      return this.rounds[this.current - 1];
-    },
     graded() {
       return this.$store.state.teams.filter(team => {
         return team.rounds[this.current - 1].graded;
       });
-    }
-  },
-  props: {
-    rounds: {
-      type: Array,
-      required: true
+    },
+    roundTotal() {
+      switch(this.current) {
+        case 1:
+          return 6;
+          break;
+
+        case 2:
+          return 8;
+          break;
+          
+        case 3:
+          return 6;
+          break;
+
+        case  4:
+          return 10;
+          break;
+
+        case 5:
+          return 10;
+          break;
+
+        case 6:
+          return 10;
+          break;
+
+        case 7:
+          return parseInt(this.sevenTotal);
+          break;
+
+        default:
+          return null;
+          break;
+      }
     }
   },
   methods: {
@@ -113,33 +141,32 @@ export default {
     nextRound() {
       this.current++;
       this.reset();
-      this.sevenTotal = null;
     },
     previousRound() {
       this.current--;
       this.reset();
-      this.sevenTotal = null;
     },
     scoreRound() {
+      if(this.current === 1) {
+        this.addTeam();
+      }
       const teamNameArray = this.teamArray.map((team) => team.teamName);
       const thisTeamIndex = teamNameArray.indexOf(this.teamName);
       if(thisTeamIndex < 0) {
         alert(`"${this.teamName}" is not a team!`);
-      } else {
-        let roundTotal = (this.current < 7) ? this.rounds[this.current - 1].questions : this.sevenTotal;
-        let gradedScore = parseInt(this.teamRight);
 
-        console.log(typeof gradedScore);
+      } else {
+        let gradedScore = parseInt(this.teamRight);
 
         if(this.current === 4) {
           gradedScore = parseInt(this.personPoints);
         }
 
         if(this.double) {
-          roundTotal > this.teamRight ? gradedScore = 0 : gradedScore = 2 * roundTotal;
+          this.roundTotal != this.teamRight ? gradedScore = 0 : gradedScore = 2 * this.roundTotal;
         }
 
-        if(this.current < 4 && parseInt(this.teamNum) > 0 && !this.teamArray[thisTeamIndex].teamNum) {
+        if(parseInt(this.teamNum) > 0 && !this.teamArray[thisTeamIndex].teamNum) {
           gradedScore = parseInt(gradedScore) + 2;
           this.$store.commit('updateNum', {index: thisTeamIndex, value: this.teamNum});
         }
@@ -156,7 +183,43 @@ export default {
 
         this.reset();
         this.teamName = null;
+        document.getElementById("curr-team").select();
       }
+    },
+    addTeam() {
+      this.$store.commit("pushTeam", {
+        teamName: this.teamName,
+        rounds: [{
+            number: 1,
+            gained: 0
+          },
+          {
+            number: 2,
+            gained: 0
+          },
+          {
+            number: 3,
+            gained: 0
+          },
+          {
+            number: 4,
+            gained: 0
+          },
+          {
+            number: 5,
+            gained: 0
+          },
+          {
+            number: 6,
+            gained: 0
+          },
+          {
+            number: 7,
+            gained: 0
+          }
+        ],
+        total: 0
+      })
     }
   }
 }
