@@ -8,7 +8,7 @@
         <div class="button-sub" v-else></div>
       </div>
 
-      <h3 class="done-grading" v-if="graded.length === teamArray.length">- All teams have been graded! -</h3>
+      <h3 class="done-grading" v-if="graded.length === teamArray.length && current !== 1">- All teams have been graded! -</h3>
       <h3 v-else>{{teamArray.length - graded.length}} more teams to grade!</h3>
 
       <form id="round-form" v-on:submit.prevent>
@@ -20,7 +20,7 @@
 
         <br>
         
-        <div v-if="current != 4">
+        <div v-if="current !== 4">
           <label for="num-right">Number of questions correct:</label>
           <input type="number" id="num-right" min="0" :max="roundTotal" v-model="teamRight">
 
