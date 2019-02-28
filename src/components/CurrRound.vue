@@ -108,35 +108,27 @@ export default {
       switch (this.current) {
         case 1:
           return 6;
-          break;
 
         case 2:
           return 8;
-          break;
 
         case 3:
           return 6;
-          break;
 
         case 4:
           return 10;
-          break;
 
         case 5:
           return 10;
-          break;
 
         case 6:
           return 10;
-          break;
 
         case 7:
           return parseInt(this.sevenTotal);
-          break;
 
         default:
           return null;
-          break;
       }
     }
   },
