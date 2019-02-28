@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import MetaNotes from "./MetaNotes";
 import Team from "./Team";
 
