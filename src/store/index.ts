@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import _ from "lodash";
+import {sortBy} from "lodash";
 
 import {State} from "./interfaces";
 
@@ -31,7 +31,7 @@ export default new Vuex.Store({
   state: baseState,
   getters: {
     rankedTeams(state) {
-      return _.sortBy(state.teams, (team) => team.total).reverse();
+      return sortBy(state.teams, (team) => team.total).reverse();
     },
     numTeams(state) {
       return state.teams.length;
