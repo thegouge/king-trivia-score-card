@@ -2,30 +2,33 @@ import Vue from "vue";
 import Vuex from "vuex";
 import _ from "lodash";
 
+import {State} from "./interfaces";
+
 Vue.use(Vuex);
 
 const fullDay = new Date();
 
+const baseState: State = {
+  metaData: {
+    date: `${fullDay.getFullYear()}-${("0" + (fullDay.getMonth() + 1)).slice(
+      -2
+    )}-${("0" + fullDay.getDate()).slice(-2)}`,
+    location: "",
+    arrive: "",
+    start: "",
+    end: "",
+    teams: "",
+    players: "",
+    empty: "",
+    quizRating: "",
+    internal: ""
+  },
+  teams: []
+};
+
 export default new Vuex.Store({
   strict: true,
-  state: {
-    metaData: {
-      date: `${fullDay.getFullYear()}-${("0" + (fullDay.getMonth() + 1)).slice(
-        -2
-      )}-${("0" + fullDay.getDate()).slice(-2)}`,
-      location: "",
-      arrive: "",
-      start: "",
-      end: "",
-      teams: "",
-      players: "",
-      empty: "",
-      quizRating: "",
-      internal: ""
-    },
-    teams: [],
-    timer: 0
-  },
+  state: baseState,
   getters: {
     rankedTeams(state) {
       return _.sortBy(state.teams, (team) => team.total).reverse();
@@ -73,15 +76,15 @@ export default new Vuex.Store({
             ],
             total: 0
           });
-      this.commit("saveToLocal", "_autoSave");
+      // this.commit("saveToLocal", "_autoSave");
     },
     updateName(state, payload) {
       state.teams[payload.index].teamName = payload.value;
-      this.commit("saveToLocal", "_autoSave");
+      // this.commit("saveToLocal", "_autoSave");
     },
     updateNum(state, payload) {
       state.teams[payload.index].teamNum = payload.value;
-      this.commit("saveToLocal", "_autoSave");
+      // this.commit("saveToLocal", "_autoSave");
     },
     updateRounds(state, payload) {
       state.teams[payload.index].rounds[payload.round - 1].gained =
@@ -103,15 +106,15 @@ export default new Vuex.Store({
         0
       );
       state.teams[payload.index].total = newTotal;
-      this.commit("saveToLocal", "_autoSave");
+      // this.commit("saveToLocal", "_autoSave");
     },
     updateMeta(state, payload) {
       state.metaData[payload.noteToUpdate] = payload.value;
     },
     loadFromLocal(state, loadName) {
-      let newState = JSON.parse(localStorage.getItem(loadName));
+      let newState = JSON.parse(<string>localStorage.getItem(loadName));
       if (newState) {
-        this.replaceState(newState);
+        this.replaceState(newState, null);
       }
     },
     saveToLocal(state, saveName) {
@@ -119,25 +122,27 @@ export default new Vuex.Store({
     },
     resetAutoSave() {
       localStorage.removeItem("_autoSave");
-      this.replaceState({
-        metaData: {
-          date: `${fullDay.getFullYear()}-${(
-            "0" +
-            (fullDay.getMonth() + 1)
-          ).slice(-2)}-${("0" + fullDay.getDate()).slice(-2)}`,
-          location: "",
-          arrive: "",
-          start: "",
-          end: "",
-          teams: "",
-          players: "",
-          empty: "",
-          quizRating: "",
-          internal: ""
+      this.replaceState(
+        {
+          metaData: {
+            date: `${fullDay.getFullYear()}-${(
+              "0" +
+              (fullDay.getMonth() + 1)
+            ).slice(-2)}-${("0" + fullDay.getDate()).slice(-2)}`,
+            location: "",
+            arrive: "",
+            start: "",
+            end: "",
+            teams: "",
+            players: "",
+            empty: "",
+            quizRating: "",
+            internal: ""
+          },
+          teams: []
         },
-        teams: [],
-        timer: 0
-      });
+        null
+      );
     }
   }
 });

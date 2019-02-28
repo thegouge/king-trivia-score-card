@@ -3,24 +3,27 @@
     <h1>King Trivia Score Card</h1>
 
     <ul id="tab-bar">
-        <li class="tab" v-for="(tab, index) in tabs" @click="selectedTab = tab" :key="index" :class="{ activeTab: selectedTab === tab }">
-          {{ tab }}
-        </li>
+      <li
+        class="tab"
+        v-for="(tab, index) in tabs"
+        @click="selectedTab = tab"
+        :key="index"
+        :class="{ activeTab: selectedTab === tab }"
+      >{{ tab }}</li>
     </ul>
 
     <br>
 
     <main>
-      <ScoreBoard v-show='selectedTab === "Score Board"' :rounds="rounds" />
+      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds"/>
 
-      <CurrRound v-show='selectedTab === "Current Round"' :rounds="rounds" />
+      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds"/>
 
-      <Standings v-show='selectedTab === "Standings"' />
+      <Standings v-show="selectedTab === 'Standings'"/>
 
-      <Timer v-show='selectedTab === "Timer"' />
+      <Timer v-show="selectedTab === 'Timer'"/>
 
-      <CoinFlip v-show='selectedTab === "Coin Flip"' />
-
+      <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
     </main>
   </div>
 </template>
@@ -33,7 +36,7 @@ import Timer from "./components/Timer";
 import CoinFlip from "./components/CoinFlip";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ScoreBoard,
     CurrRound,
@@ -45,7 +48,8 @@ export default {
     return {
       tabs: ["Score Board", "Current Round", "Standings", "Timer", "Coin Flip"],
       selectedTab: "Score Board",
-      rounds: [{
+      rounds: [
+        {
           number: 1
         },
         {
@@ -65,14 +69,14 @@ export default {
         },
         {
           number: 7
-        },
+        }
       ]
-    }
+    };
   },
   mounted() {
-    this.$store.commit('loadFromLocal', '_autoSave');
+    this.$store.commit("loadFromLocal", "_autoSave");
   }
-}
+};
 </script>
 
 <style>

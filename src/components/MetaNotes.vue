@@ -1,76 +1,46 @@
 <template>
-  <form 
-  id="top-notes" 
-  @submit.prevent="onSubmit">
-    <p id="in-date" 
-    class="in-field">
+  <form id="top-notes" @submit.prevent="onSubmit">
+    <p id="in-date" class="in-field">
       <label for="date">Date:</label>
-      <input type="date" 
-      id="date" 
-      @click="select('date')" 
-      v-model="today">
+      <input type="date" id="date" @click="select('date')" v-model="today">
     </p>
 
-    <p 
-    id="in-loc" 
-    class="in-field">
+    <p id="in-loc" class="in-field">
       <label for="location">Location:</label>
-      <input type="text" 
-      id="location" 
-      v-model="triviaLocation" 
-      @click="select('location')">
+      <input type="text" id="location" v-model="triviaLocation" @click="select('location')">
     </p>
 
-    <p id="in-arr" 
-    class="in-field">
+    <p id="in-arr" class="in-field">
       <label for="arrive">Arrival Time</label>
-      <input type="time" id="arrive" 
-      v-model="arrivalTime" 
-      @click="select('arrive')">
+      <input type="time" id="arrive" v-model="arrivalTime" @click="select('arrive')">
     </p>
 
-    <p id="in-start" 
-    class="in-field" >
+    <p id="in-start" class="in-field">
       <label for="start">Start Time</label>
-      <input type="time" id="start" 
-      v-model="triviaStart" 
-      @click="select('start')">
+      <input type="time" id="start" v-model="triviaStart" @click="select('start')">
     </p>
 
-    <p id="in-end" 
-    class="in-field" >
+    <p id="in-end" class="in-field">
       <label for="end">Ending Time</label>
-      <input type="time" id="end" 
-      v-model="triviaEnd" 
-      @click="select('end')">
+      <input type="time" id="end" v-model="triviaEnd" @click="select('end')">
     </p>
 
-    <p id="in-teams" 
-    class="in-field">
+    <p id="in-teams" class="in-field">
       <label for="teams"># of Teams</label>
-      <input type="number" id="num-teams" 
-      v-bind:value="numTeams" 
-      @click="select('num-teams')">
+      <input type="number" id="num-teams" v-bind:value="numTeams" @click="select('num-teams')">
     </p>
 
-    <p id="in-play" 
-    class="in-field">
+    <p id="in-play" class="in-field">
       <label for="players"># of Players</label>
-      <input type="number" id="players" 
-      @click="select('players')"  
-      v-model="numPlayers">
+      <input type="number" id="players" @click="select('players')" v-model="numPlayers">
     </p>
 
-    <p id="in-emp" 
-    class="in-field">
+    <p id="in-emp" class="in-field">
       <label for="empty">Empty Tables</label>
-      <input type="number" id="empty" 
-      @click="select('empty')"  
-      v-model="mtTables">
+      <input type="number" id="empty" @click="select('empty')" v-model="mtTables">
     </p>
 
-    <p id="in-rate" 
-    class="in-field">
+    <p id="in-rate" class="in-field">
       <label for="rating">Rate the Questions!</label>
       <select v-model="quizRating" id="rating">
         <option value="5">5 -- Awesome!</option>
@@ -81,12 +51,9 @@
       </select>
     </p>
 
-    <p id="in-notes" 
-    class="in-field">
+    <p id="in-notes" class="in-field">
       <label for="notes">Notes</label>
-      <textarea id="internal" 
-      @click="select('notes')"  
-      v-model="otherNotes"></textarea>
+      <textarea id="internal" @click="select('notes')" v-model="otherNotes"></textarea>
     </p>
   </form>
 </template>
@@ -95,7 +62,7 @@
 export default {
   name: "MetaNotes",
   data() {
-    return {}
+    return {};
   },
   computed: {
     today: {
@@ -103,7 +70,7 @@ export default {
         return this.$store.state.metaData.date;
       },
       set(newDate) {
-        this.updateMeta('date', newDate);
+        this.updateMeta("date", newDate);
       }
     },
     triviaLocation: {
@@ -111,7 +78,7 @@ export default {
         return this.$store.state.metaData.location;
       },
       set(newLoc) {
-        this.updateMeta('location', newLoc);
+        this.updateMeta("location", newLoc);
       }
     },
     arrivalTime: {
@@ -119,7 +86,7 @@ export default {
         return this.$store.state.metaData.arrive;
       },
       set(newArrive) {
-        this.updateMeta('arrive', newArrive);
+        this.updateMeta("arrive", newArrive);
       }
     },
     triviaStart: {
@@ -127,7 +94,7 @@ export default {
         return this.$store.state.metaData.start;
       },
       set(newStart) {
-        this.updateMeta('start', newStart);
+        this.updateMeta("start", newStart);
       }
     },
     triviaEnd: {
@@ -135,7 +102,7 @@ export default {
         return this.$store.state.metaData.end;
       },
       set(newStart) {
-        this.updateMeta('end', newStart);
+        this.updateMeta("end", newStart);
       }
     },
     numTeams: {
@@ -143,7 +110,7 @@ export default {
         return this.$store.getters.numTeams;
       },
       set(newTeams) {
-        this.updateMeta('teams', newTeams);
+        this.updateMeta("teams", newTeams);
       }
     },
     numPlayers: {
@@ -151,7 +118,7 @@ export default {
         return this.$store.state.metaData.players;
       },
       set(newPlayers) {
-        this.updateMeta('players', newPlayers);
+        this.updateMeta("players", newPlayers);
       }
     },
     mtTables: {
@@ -159,7 +126,7 @@ export default {
         return this.$store.state.metaData.empty;
       },
       set(newTables) {
-        this.updateMeta('empty', newTables);
+        this.updateMeta("empty", newTables);
       }
     },
     quizRating: {
@@ -167,7 +134,7 @@ export default {
         return this.$store.state.metaData.quizRating;
       },
       set(newTables) {
-        this.updateMeta('quizRating', newTables);
+        this.updateMeta("quizRating", newTables);
       }
     },
     otherNotes: {
@@ -175,7 +142,7 @@ export default {
         return this.$store.state.metaData.internal;
       },
       set(newNote) {
-        this.updateMeta('internal', newNote);
+        this.updateMeta("internal", newNote);
       }
     }
   },
@@ -185,10 +152,10 @@ export default {
       document.getElementById(arg).select();
     },
     updateMeta(note, newValue) {
-      this.$store.commit("updateMeta", {noteToUpdate: note, value: newValue});
+      this.$store.commit("updateMeta", { noteToUpdate: note, value: newValue });
     }
   }
-}
+};
 </script>
 
 <style scoped>
