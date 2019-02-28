@@ -1,23 +1,37 @@
 <template>
   <div id="curr-round">
     <div id="round-title">
-      <button class="round-header round-button" v-if="current > 1" @click="previousRound">&larr;</button>
+      <button
+        class="round-header round-button"
+        v-if="current > 1"
+        @click="previousRound"
+      >
+        &larr;
+      </button>
       <div class="button-sub" v-else></div>
       <h2 class="round-header">Round {{ current }}</h2>
-      <button class="round-header round-button" v-if="current < 7" @click="nextRound">&rarr;</button>
+      <button
+        class="round-header round-button"
+        v-if="current < 7"
+        @click="nextRound"
+      >
+        &rarr;
+      </button>
       <div class="button-sub" v-else></div>
     </div>
 
     <h3
       class="done-grading"
       v-if="graded.length === teamArray.length && current !== 1"
-    >- All teams have been graded! -</h3>
-    <h3 v-else>{{teamArray.length - graded.length}} more teams to grade!</h3>
+    >
+      - All teams have been graded! -
+    </h3>
+    <h3 v-else>{{ teamArray.length - graded.length }} more teams to grade!</h3>
 
     <form id="round-form" v-on:submit.prevent>
-      <label
-        for="curr-team"
-      >{{(this.current === 1) ? "Write a Team Name!" : "Choose a team to grade"}}</label>
+      <label for="curr-team">{{
+        this.current === 1 ? "Write a Team Name!" : "Choose a team to grade"
+      }}</label>
       <input
         list="curr-team-list"
         id="curr-team"
@@ -25,34 +39,51 @@
         v-model="teamName"
         @change="reset"
         autocomplete="off"
-      >
+      />
       <datalist id="curr-team-list">
-        <option v-for="(team, index) in teamArray" :key="index" :value="team.teamName"/>
+        <option
+          v-for="(team, index) in teamArray"
+          :key="index"
+          :value="team.teamName"
+        />
       </datalist>
 
-      <br>
+      <br />
 
       <div v-if="current !== 4">
         <label for="num-right">Number of questions correct:</label>
-        <input type="number" id="num-right" min="0" :max="roundTotal" v-model="teamRight">
+        <input
+          type="number"
+          id="num-right"
+          min="0"
+          :max="roundTotal"
+          v-model="teamRight"
+        />
 
-        <br>
+        <br />
 
         <label for="double">Double Down?</label>
-        <input type="checkbox" v-model="double">
+        <input type="checkbox" v-model="double" />
 
         <div v-if="current <= 3">
           <label for="registered">What's their team number?</label>
-          <input type="number" v-model="teamNum" name="registered" max="99999">
+          <input
+            type="number"
+            v-model="teamNum"
+            name="registered"
+            max="99999"
+          />
         </div>
       </div>
 
       <div v-if="current === 7">
         <label for="pen">Did they turn in their pen?</label>
-        <input type="checkbox" name="pen" v-model="penPoints">
-        
-        <label for="sevTotal">How many questions are there in this round?</label>
-        <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
+        <input type="checkbox" name="pen" v-model="penPoints" />
+
+        <label for="sevTotal"
+          >How many questions are there in this round?</label
+        >
+        <input type="number" v-model="sevenTotal" id="sevTotal" max="10" />
       </div>
 
       <div v-if="current === 4">
@@ -68,13 +99,15 @@
         </select>
       </div>
 
-      <br>
+      <br />
       <button class="submit" @click="scoreRound">Submit</button>
     </form>
 
     <div class="graded-list">
       <ul>
-        <li v-for="(team, index) in graded" :key="index">{{ team.teamName }} has been graded!</li>
+        <li v-for="(team, index) in graded" :key="index">
+          {{ team.teamName }} has been graded!
+        </li>
       </ul>
     </div>
   </div>

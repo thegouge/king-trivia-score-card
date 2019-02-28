@@ -9,21 +9,23 @@
         @click="selectedTab = tab"
         :key="index"
         :class="{ activeTab: selectedTab === tab }"
-      >{{ tab }}</li>
+      >
+        {{ tab }}
+      </li>
     </ul>
 
-    <br>
+    <br />
 
     <main>
-      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds"/>
+      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds" />
 
-      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds"/>
+      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds" />
 
-      <Standings v-show="selectedTab === 'Standings'"/>
+      <Standings v-show="selectedTab === 'Standings'" />
 
-      <Timer v-show="selectedTab === 'Timer'"/>
+      <Timer v-show="selectedTab === 'Timer'" />
 
-      <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
+      <CoinFlip v-show="selectedTab === 'Coin Flip'" />
     </main>
   </div>
 </template>

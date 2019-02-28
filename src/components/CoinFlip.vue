@@ -5,15 +5,15 @@
     <div id="flip-window" v-show="flipping">
       <h3>Flipping...</h3>
     </div>
-    
+
     <div v-if="heads">
       <h2>Heads!</h2>
-      <img src="../assets/heads.png" alt="quarter heads">
+      <img src="../assets/heads.png" alt="quarter heads" />
     </div>
 
     <div v-else-if="heads === false">
       <h2>Tails!</h2>
-      <img src="../assets/tails.png" alt="quarter tails">
+      <img src="../assets/tails.png" alt="quarter tails" />
     </div>
   </div>
 </template>
@@ -25,18 +25,18 @@ export default {
     return {
       heads: null,
       flipping: false
-    }
+    };
   },
   methods: {
     flipCoin() {
       this.flipping = true;
       setTimeout(() => {
-        (Math.random() > 0.5) ? this.heads = true : this.heads = false
+        Math.random() > 0.5 ? (this.heads = true) : (this.heads = false);
         this.flipping = false;
       }, 500);
     }
   }
-}
+};
 </script>
 
 <style>
@@ -44,4 +44,3 @@ export default {
   text-align: center;
 }
 </style>
-
