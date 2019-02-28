@@ -8,12 +8,12 @@
     
     <div v-if="heads">
       <h2>Heads!</h2>
-      <img src="../../assets/heads.png" alt="quarter heads">
+      <img src="../assets/heads.png" alt="quarter heads">
     </div>
 
     <div v-else-if="heads === false">
       <h2>Tails!</h2>
-      <img src="../../assets/tails.png" alt="quarter tails">
+      <img src="../assets/tails.png" alt="quarter tails">
     </div>
   </div>
 </template>

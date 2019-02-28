@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const fullDay = new Date();
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: true,
   state: {
     metaData: {
@@ -28,7 +28,7 @@ export const store = new Vuex.Store({
   },
   getters: {
     rankedTeams(state) {
-      return _.sortBy(state.teams, team => team.total).reverse();
+      return _.sortBy(state.teams, (team) => team.total).reverse();
     },
     numTeams(state) {
       return state.teams.length;
@@ -36,40 +36,43 @@ export const store = new Vuex.Store({
   },
   mutations: {
     pushTeam(state, payload) {
-      (payload) ? state.teams.push(payload): state.teams.push({
-        teamName: "",
-        teamNum: "00000",
-        rounds: [{
-            number: 1,
-            gained: 0
-          },
-          {
-            number: 2,
-            gained: 0
-          },
-          {
-            number: 3,
-            gained: 0
-          },
-          {
-            number: 4,
-            gained: 0
-          },
-          {
-            number: 5,
-            gained: 0
-          },
-          {
-            number: 6,
-            gained: 0
-          },
-          {
-            number: 7,
-            gained: 0
-          }
-        ],
-        total: 0
-      });
+      payload
+        ? state.teams.push(payload)
+        : state.teams.push({
+            teamName: "",
+            teamNum: "00000",
+            rounds: [
+              {
+                number: 1,
+                gained: 0
+              },
+              {
+                number: 2,
+                gained: 0
+              },
+              {
+                number: 3,
+                gained: 0
+              },
+              {
+                number: 4,
+                gained: 0
+              },
+              {
+                number: 5,
+                gained: 0
+              },
+              {
+                number: 6,
+                gained: 0
+              },
+              {
+                number: 7,
+                gained: 0
+              }
+            ],
+            total: 0
+          });
       this.commit("saveToLocal", "_autoSave");
     },
     updateName(state, payload) {
@@ -108,19 +111,20 @@ export const store = new Vuex.Store({
     loadFromLocal(state, loadName) {
       let newState = JSON.parse(localStorage.getItem(loadName));
       if (newState) {
-        store.replaceState(newState);
+        this.replaceState(newState);
       }
     },
     saveToLocal(state, saveName) {
       localStorage.setItem(saveName, JSON.stringify(state));
     },
-    resetAutoSave(state) {
+    resetAutoSave() {
       localStorage.removeItem("_autoSave");
-      store.replaceState({
+      this.replaceState({
         metaData: {
-          date: `${fullDay.getFullYear()}-${("0" + (fullDay.getMonth() + 1)).slice(
-            -2
-          )}-${("0" + fullDay.getDate()).slice(-2)}`,
+          date: `${fullDay.getFullYear()}-${(
+            "0" +
+            (fullDay.getMonth() + 1)
+          ).slice(-2)}-${("0" + fullDay.getDate()).slice(-2)}`,
           location: "",
           arrive: "",
           start: "",
