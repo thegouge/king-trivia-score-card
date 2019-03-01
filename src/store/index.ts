@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { sortBy } from "lodash";
+import {sortBy} from "lodash";
 
-import { State } from "./interfaces";
+import {State} from "./interfaces";
 
 Vue.use(Vuex);
 
@@ -26,12 +26,12 @@ const baseState: State = {
   teams: []
 };
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   strict: true,
   state: baseState,
   getters: {
     rankedTeams(state) {
-      return sortBy(state.teams, team => team.total).reverse();
+      return sortBy(state.teams, (team) => team.total).reverse();
     },
     numTeams(state) {
       return state.teams.length;
@@ -76,15 +76,15 @@ export default new Vuex.Store({
             ],
             total: 0
           });
-      // this.commit("saveToLocal", "_autoSave");
+      store.commit("saveToLocal", "_autoSave");
     },
     updateName(state, payload) {
       state.teams[payload.index].teamName = payload.value;
-      // this.commit("saveToLocal", "_autoSave");
+      store.commit("saveToLocal", "_autoSave");
     },
     updateNum(state, payload) {
       state.teams[payload.index].teamNum = payload.value;
-      // this.commit("saveToLocal", "_autoSave");
+      store.commit("saveToLocal", "_autoSave");
     },
     updateRounds(state, payload) {
       state.teams[payload.index].rounds[payload.round - 1].gained =
@@ -106,7 +106,7 @@ export default new Vuex.Store({
         0
       );
       state.teams[payload.index].total = newTotal;
-      // this.commit("saveToLocal", "_autoSave");
+      store.commit("saveToLocal", "_autoSave");
     },
     updateMeta(state, payload) {
       state.metaData[payload.noteToUpdate] = payload.value;
@@ -146,3 +146,5 @@ export default new Vuex.Store({
     }
   }
 });
+
+export default store;
