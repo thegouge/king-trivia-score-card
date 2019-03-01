@@ -2,7 +2,7 @@
   <div id="rank-box">
     <h2 id="ranking-title">Team Rankings</h2>
     <ul>
-      <li v-for="(team, index) in rankedTeams" :key="index">
+      <li v-for="(team, index) in this.rankedTeams" :key="index">
         in {{ rankTeam(team) }} place: "{{ team.teamName }}" with
         {{ team.total }} points!
       </li>
@@ -11,41 +11,46 @@
 </template>
 
 <script lang="ts">
-export default {
-  computed: {
-    teams() {
-      return this.$store.state.teams.map(team => {
-        return { teamName: team.teamName, total: team.total };
-      });
-    },
-    rankedTeams() {
-      return this.$store.getters.rankedTeams;
-    }
-  },
-  methods: {
-    rankTeam(teamToRank) {
-      const placing = this.rankedTeams.indexOf(teamToRank) + 1;
-      const lastNum = placing.toString().slice(-1);
-      if (placing === 11 || placing === 12 || placing === 13) {
-        return `${placing}th`;
-      } else {
-        switch (lastNum) {
-          case "1":
-            return `${placing}st`;
+import Vue from "vue";
+import Component from "vue-class-component";
 
-          case "2":
-            return `${placing}nd`;
+import { TeamType } from "../store/interfaces";
 
-          case "3":
-            return `${placing}rd`;
+@Component
+export default class Standings extends Vue {
+  // Computed
+  get teams() {
+    return this.$store.state.teams.map((team: TeamType) => {
+      return { teamName: team.teamName, total: team.total };
+    });
+  }
+  get rankedTeams() {
+    return this.$store.getters.rankedTeams;
+  }
 
-          default:
-            return `${placing}th`;
-        }
+  // Methods
+  rankTeam(teamToRank: TeamType) {
+    const placing = this.rankedTeams.indexOf(teamToRank) + 1;
+    const lastNum = placing.toString().slice(-1);
+    if (placing === 11 || placing === 12 || placing === 13) {
+      return `${placing}th`;
+    } else {
+      switch (lastNum) {
+        case "1":
+          return `${placing}st`;
+
+        case "2":
+          return `${placing}nd`;
+
+        case "3":
+          return `${placing}rd`;
+
+        default:
+          return `${placing}th`;
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

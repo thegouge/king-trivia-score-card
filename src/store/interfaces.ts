@@ -1,9 +1,9 @@
 export interface State {
   metaData: MetaData;
-  teams: Team[];
+  teams: TeamType[];
 }
 
-interface MetaData {
+export interface MetaData {
   [key: string]: string;
   date: string;
   location: string;
@@ -17,14 +17,14 @@ interface MetaData {
   internal: string;
 }
 
-interface Team {
+export interface TeamType {
   teamName: string;
   teamNum: string;
   total: number;
   rounds: Round[];
 }
 
-interface Round {
+export interface Round {
   number: number;
   gained: number;
   graded?: boolean;

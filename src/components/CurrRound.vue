@@ -3,90 +3,65 @@
     <div id="round-title">
       <button
         class="round-header round-button"
-        v-if="current > 1"
+        v-if="this.current > 1"
         @click="previousRound"
-      >
-        &larr;
-      </button>
+      >&larr;</button>
       <div class="button-sub" v-else></div>
-      <h2 class="round-header">Round {{ current }}</h2>
-      <button
-        class="round-header round-button"
-        v-if="current < 7"
-        @click="nextRound"
-      >
-        &rarr;
-      </button>
+      <h2 class="round-header">Round {{ this.current }}</h2>
+      <button class="round-header round-button" v-if="this.current < 7" @click="nextRound">&rarr;</button>
       <div class="button-sub" v-else></div>
     </div>
 
     <h3
       class="done-grading"
-      v-if="graded.length === teamArray.length && current !== 1"
-    >
-      - All teams have been graded! -
-    </h3>
+      v-if="graded.length === teamArray.length && this.current !== 1 && this.teamArray.length > 0"
+    >- All teams have been graded! -</h3>
     <h3 v-else>{{ teamArray.length - graded.length }} more teams to grade!</h3>
 
     <form id="round-form" v-on:submit.prevent>
-      <label for="curr-team">{{
+      <label for="curr-team">
+        {{
         this.current === 1 ? "Write a Team Name!" : "Choose a team to grade"
-      }}</label>
+        }}
+      </label>
       <input
         list="curr-team-list"
         id="curr-team"
         name="curr-team"
         v-model="teamName"
-        @change="reset"
+        @change="this.reset"
         autocomplete="off"
-      />
+      >
       <datalist id="curr-team-list">
-        <option
-          v-for="(team, index) in teamArray"
-          :key="index"
-          :value="team.teamName"
-        />
+        <option v-for="(team, index) in teamArray" :key="index" :value="team.teamName"/>
       </datalist>
 
-      <br />
+      <br>
 
-      <div v-if="current !== 4">
+      <div v-if="this.current !== 4">
         <label for="num-right">Number of questions correct:</label>
-        <input
-          type="number"
-          id="num-right"
-          min="0"
-          :max="roundTotal"
-          v-model="teamRight"
-        />
+        <input type="number" id="num-right" min="0" :max="roundTotal" v-model="teamRight">
 
-        <br />
+        <br>
 
         <label for="double">Double Down?</label>
-        <input type="checkbox" v-model="double" />
+        <input type="checkbox" v-model="double">
 
-        <div v-if="current <= 3">
+        <div v-if="this.current <= 3">
           <label for="registered">What's their team number?</label>
-          <input
-            type="number"
-            v-model="teamNum"
-            name="registered"
-            max="99999"
-          />
+          <input type="number" v-model="teamNum" name="registered" max="99999">
         </div>
       </div>
 
-      <div v-if="current === 7">
+      <div v-if="this.current === 7">
         <label for="pen">Did they turn in their pen?</label>
-        <input type="checkbox" name="pen" v-model="penPoints" />
-
-        <label for="sevTotal"
-          >How many questions are there in this round?</label
-        >
-        <input type="number" v-model="sevenTotal" id="sevTotal" max="10" />
+        <input type="checkbox" name="pen" v-model="penPoints">
+        
+        <label for="sevTotal">How many questions are there in this round?</label>
+        <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
       </div>
 
-      <div v-if="current === 4">
+      <div v-if="this.current === 4">
         <label for="person-points">How many points did they get?</label>
         <select id="person-points" v-model="personPoints">
           <option value="10">10pts</option>
@@ -99,177 +74,186 @@
         </select>
       </div>
 
-      <br />
+      <br>
       <button class="submit" @click="scoreRound">Submit</button>
     </form>
 
     <div class="graded-list">
       <ul>
-        <li v-for="(team, index) in graded" :key="index">
-          {{ team.teamName }} has been graded!
-        </li>
+        <li v-for="(team, index) in this.graded" :key="index">{{ team.teamName }} has been graded!</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: "CurrRound",
-  data() {
-    return {
-      current: 1,
-      teamName: null,
-      teamNum: null,
-      teamRight: null,
-      double: false,
-      personPoints: null,
-      sevenTotal: 10,
-      penPoints: false
-    };
-  },
-  computed: {
-    teamArray() {
-      return this.$store.state.teams;
-    },
-    graded() {
-      return this.$store.state.teams.filter(team => {
-        return team.rounds[this.current - 1].graded;
-      });
-    },
-    roundTotal() {
-      switch (this.current) {
-        case 1:
-          return 6;
+import Vue from "vue";
+import Component from "vue-class-component";
 
-        case 2:
-          return 8;
+import { TeamType } from "../store/interfaces";
 
-        case 3:
-          return 6;
+@Component
+export default class CurrRound extends Vue {
+  // DATA
+  current: number = 1;
+  teamName: string = "";
+  teamNum: string = "";
+  teamRight: string = "";
+  double: boolean = false;
+  personPoints: string = "";
+  sevenTotal: string = "10";
+  penPoints: boolean = false;
 
-        case 4:
-          return 10;
+  // COMPUTED
+  get teamArray() {
+    return this.$store.state.teams;
+  }
 
-        case 5:
-          return 10;
+  get graded() {
+    return this.$store.state.teams.filter((team: TeamType) => {
+      return team.rounds[this.current - 1].graded;
+    });
+  }
 
-        case 6:
-          return 10;
+  get roundTotal() {
+    switch (this.current) {
+      case 1:
+        return 6;
 
-        case 7:
-          return parseInt(this.sevenTotal);
+      case 2:
+        return 8;
 
-        default:
-          return null;
-      }
-    }
-  },
-  methods: {
-    reset() {
-      this.teamNum = null;
-      this.teamRight = null;
-      this.double = false;
-      this.personPoints = null;
-      this.penPoints = false;
-    },
-    nextRound() {
-      this.current++;
-      this.reset();
-    },
-    previousRound() {
-      this.current--;
-      this.reset();
-    },
-    scoreRound() {
-      const doesTeamExist =
-        this.teamArray.filter(team => team.teamName === this.teamName)
-          .length === 1;
-      if (this.current === 1 && !doesTeamExist) {
-        this.addTeam();
-      }
-      const thisTeamNameArray = this.teamArray.map(team => team.teamName);
-      const thisTeamIndex = thisTeamNameArray.indexOf(this.teamName);
-      if (thisTeamIndex < 0) {
-        alert(`"${this.teamName}" is not a team!`);
-      } else {
-        let gradedScore = parseInt(this.teamRight);
+      case 3:
+        return 6;
 
-        if (this.current === 4) {
-          gradedScore = parseInt(this.personPoints);
-        }
+      case 4:
+        return 10;
 
-        if (this.double) {
-          this.roundTotal != this.teamRight
-            ? (gradedScore = 0)
-            : (gradedScore = 2 * this.roundTotal);
-        }
+      case 5:
+        return 10;
 
-        if (
-          parseInt(this.teamNum) > 0 &&
-          !this.teamArray[thisTeamIndex].teamNum
-        ) {
-          gradedScore = gradedScore + 2;
-          this.$store.commit("updateNum", {
-            index: thisTeamIndex,
-            value: this.teamNum
-          });
-        }
+      case 6:
+        return 10;
 
-        if (this.current === 7 && this.penPoints) {
-          gradedScore = gradedScore + 2;
-        }
+      case 7:
+        return parseInt(this.sevenTotal);
 
-        this.$store.commit("updateRounds", {
-          index: thisTeamIndex,
-          round: this.current,
-          score: gradedScore
-        });
-
-        this.reset();
-        this.teamName = null;
-        document.getElementById("curr-team").select();
-      }
-    },
-    addTeam() {
-      this.$store.commit("pushTeam", {
-        teamName: this.teamName,
-        teamNumber: "00000",
-        rounds: [
-          {
-            number: 1,
-            gained: 0
-          },
-          {
-            number: 2,
-            gained: 0
-          },
-          {
-            number: 3,
-            gained: 0
-          },
-          {
-            number: 4,
-            gained: 0
-          },
-          {
-            number: 5,
-            gained: 0
-          },
-          {
-            number: 6,
-            gained: 0
-          },
-          {
-            number: 7,
-            gained: 0
-          }
-        ],
-        total: 0
-      });
+      default:
+        return 0;
     }
   }
-};
+
+  // METHODS
+  reset() {
+    this.teamNum = "";
+    this.teamRight = "";
+    this.double = false;
+    this.personPoints = "";
+    this.penPoints = false;
+  }
+
+  nextRound() {
+    this.current++;
+    this.reset();
+  }
+
+  previousRound() {
+    this.current--;
+    this.reset();
+  }
+
+  scoreRound() {
+    const doesTeamExist =
+      this.teamArray.filter((team: TeamType) => team.teamName === this.teamName)
+        .length === 1;
+    if (this.current === 1 && !doesTeamExist) {
+      this.addTeam();
+    }
+    const thisTeamNameArray = this.teamArray.map(
+      (team: TeamType) => team.teamName
+    );
+    const thisTeamIndex = thisTeamNameArray.indexOf(this.teamName);
+    if (thisTeamIndex < 0) {
+      alert(`"${this.teamName}" is not a team!`);
+    } else {
+      let gradedScore = parseInt(this.teamRight);
+
+      if (this.current === 4) {
+        gradedScore = parseInt(this.personPoints);
+      }
+
+      if (this.double) {
+        this.roundTotal !== parseInt(this.teamRight)
+          ? (gradedScore = 0)
+          : (gradedScore = 2 * this.roundTotal);
+      }
+
+      if (
+        parseInt(this.teamNum) > 0 &&
+        !this.teamArray[thisTeamIndex].teamNum
+      ) {
+        gradedScore = gradedScore + 2;
+        this.$store.commit("updateNum", {
+          index: thisTeamIndex,
+          value: this.teamNum
+        });
+      }
+
+      if (this.current === 7 && this.penPoints) {
+        gradedScore = gradedScore + 2;
+      }
+
+      this.$store.commit("updateRounds", {
+        index: thisTeamIndex,
+        round: this.current,
+        score: gradedScore
+      });
+
+      this.reset();
+      this.teamName = "";
+      const element = <HTMLInputElement>document.getElementById("curr-team");
+      element.select();
+    }
+  }
+
+  addTeam() {
+    this.$store.commit("pushTeam", {
+      teamName: this.teamName,
+      teamNumber: "00000",
+      rounds: [
+        {
+          number: 1,
+          gained: 0
+        },
+        {
+          number: 2,
+          gained: 0
+        },
+        {
+          number: 3,
+          gained: 0
+        },
+        {
+          number: 4,
+          gained: 0
+        },
+        {
+          number: 5,
+          gained: 0
+        },
+        {
+          number: 6,
+          gained: 0
+        },
+        {
+          number: 7,
+          gained: 0
+        }
+      ],
+      total: 0
+    });
+  }
+}
 </script>
 
 <style scoped>
@@ -307,7 +291,7 @@ export default {
   color: rgb(4, 172, 4);
 }
 
-form {
+#round-form {
   width: var(--form-width);
   margin: auto;
   padding: 20px;

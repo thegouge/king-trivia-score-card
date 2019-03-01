@@ -10,7 +10,7 @@
         max="99999"
         @click="select('team-num')"
         v-model="teamNum"
-      />
+      >
     </td>
     <td class="name">
       <input
@@ -20,13 +20,9 @@
         v-model="teamName"
         @click="select('team-name')"
         tabindex="1"
-      />
+      >
     </td>
-    <td
-      class="round-score"
-      v-for="(round, roundIndex) in rounds"
-      :key="roundIndex"
-    >
+    <td class="round-score" v-for="(round, roundIndex) in this.rounds" :key="roundIndex">
       <input
         type="number"
         class="score"
@@ -37,82 +33,79 @@
         @change="updateRound"
         @click="select('score', roundIndex + 1)"
         :tabindex="roundIndex + 2"
-      />
-
-      <span v-if="roundIndex > 0" class="total">{{
-        rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex)
-      }}</span>
+      >
+      
+      <span
+        v-if="roundIndex > 0"
+        class="total"
+      >{{ rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex) }}</span>
     </td>
     <td class="team-total">{{ total }}</td>
   </tr>
 </template>
 
 <script lang="ts">
-export default {
-  name: "Team",
-  data() {
-    return {};
-  },
-  computed: {
-    teamNum: {
-      get() {
-        return this.$store.state.teams[this.index].teamNum;
-      },
-      set(newNum) {
-        this.$store.commit("updateNum", { value: newNum, index: this.index });
-      }
-    },
-    teamName: {
-      get() {
-        return this.$store.state.teams[this.index].teamName;
-      },
-      set(newName) {
-        this.$store.commit("updateName", { value: newName, index: this.index });
-      }
-    },
-    rounds() {
-      return this.$store.state.teams[this.index].rounds;
-    },
-    total() {
-      return this.rounds.reduce((total, round) => total + round.gained, 0);
-    }
-  },
-  props: {
-    index: {
-      type: Number,
-      required: true
-    }
-  },
-  methods: {
-    getRoundTotal(index) {
-      let result = 0;
-      for (let i = 0; i < index + 1; i++) {
-        result += parseInt(this.rounds[i].gained);
-      }
-      return result;
-    },
-    updateRound(event) {
-      const roundScore = parseInt(event.target.value);
-      const roundToScore = parseInt(event.target.id.slice(-1));
-      this.$store.commit("updateRounds", {
-        round: roundToScore,
-        score: roundScore,
-        index: this.index
-      });
-    },
-    select(arg) {
-      let id;
-      if (arg === "score") {
-        id = `score-${this.index}-${arguments[1]}`;
-      } else {
-        id = `${arg}-${this.index}`;
-      }
+// import Vue from "vue";
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { Round } from "../store/interfaces";
 
-      let element = document.getElementById(id);
-      element.select();
-    }
+@Component
+export default class Team extends Vue {
+  //PROPS
+  @Prop(Number) index!: number;
+  // Calculated
+  get teamNum() {
+    return this.$store.state.teams[this.index].teamNum;
   }
-};
+  set teamNum(newNum) {
+    this.$store.commit("updateNum", { value: newNum, index: this.index });
+  }
+  get teamName() {
+    return this.$store.state.teams[this.index].teamName;
+  }
+  set teamName(newName: string) {
+    this.$store.commit("updateName", { value: newName, index: this.index });
+  }
+  get rounds() {
+    return this.$store.state.teams[this.index].rounds;
+  }
+  get total() {
+    return this.rounds.reduce(
+      (total: number, round: Round) => total + round.gained,
+      0
+    );
+  }
+  // Methods
+  getRoundTotal(index: number) {
+    let result = 0;
+    for (let i = 0; i < index + 1; i++) {
+      result += parseInt(this.rounds[i].gained);
+    }
+    return result;
+  }
+  updateRound(event: any) {
+    const roundScore = parseInt(event.target.value);
+    const roundToScore = parseInt(event.target.id.slice(-1));
+    this.$store.commit("updateRounds", {
+      round: roundToScore,
+      score: roundScore,
+      index: this.index
+    });
+  }
+  select(arg: string) {
+    let id;
+    if (arg === "score") {
+      id = `score-${this.index}-${arguments[1]}`;
+    } else {
+      id = `${arg}-${this.index}`;
+    }
+
+    const element: HTMLInputElement = document.getElementById(
+      id
+    ) as HTMLInputElement;
+    element.select();
+  }
+}
 </script>
 
 <style>
