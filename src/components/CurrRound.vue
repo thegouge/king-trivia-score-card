@@ -56,7 +56,7 @@
       <div v-if="this.current === 7">
         <label for="pen">Did they turn in their pen?</label>
         <input type="checkbox" name="pen" v-model="penPoints">
-        
+
         <label for="sevTotal">How many questions are there in this round?</label>
         <input type="number" v-model="sevenTotal" id="sevTotal" max="10">
       </div>
@@ -163,6 +163,7 @@ export default class CurrRound extends Vue {
   }
 
   scoreRound() {
+    let newTeamNum = false;
     const doesTeamExist =
       this.teamArray.filter((team: TeamType) => team.teamName === this.teamName)
         .length === 1;
@@ -180,6 +181,7 @@ export default class CurrRound extends Vue {
 
       if (this.current === 4) {
         gradedScore = parseInt(this.personPoints);
+        this.teamRight = this.personPoints;
       }
 
       if (this.double) {
@@ -192,6 +194,7 @@ export default class CurrRound extends Vue {
         parseInt(this.teamNum) > 0 &&
         !this.teamArray[thisTeamIndex].teamNum
       ) {
+        newTeamNum = true;
         gradedScore = gradedScore + 2;
         this.$store.commit("updateNum", {
           index: thisTeamIndex,
@@ -206,7 +209,12 @@ export default class CurrRound extends Vue {
       this.$store.commit("updateRounds", {
         index: thisTeamIndex,
         round: this.current,
-        score: gradedScore
+        score: gradedScore,
+        breakdown: {
+          correctAnswers: this.teamRight,
+          successfulDouble: this.double,
+          bonus: newTeamNum || this.penPoints
+        }
       });
 
       this.reset();

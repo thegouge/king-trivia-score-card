@@ -28,4 +28,11 @@ export interface Round {
   number: number;
   gained: number;
   graded?: boolean;
+  breakdown?: Breakdown;
+}
+
+interface Breakdown {
+  correctAnswers: number;
+  successfulDouble: boolean;
+  bonus: boolean;
 }
