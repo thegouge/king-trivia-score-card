@@ -212,7 +212,7 @@ export default class CurrRound extends Vue {
         score: gradedScore,
         breakdown: {
           correctAnswers: this.teamRight,
-          successfulDouble: this.double,
+          doubleDown: this.double,
           bonus: newTeamNum || this.penPoints
         }
       });

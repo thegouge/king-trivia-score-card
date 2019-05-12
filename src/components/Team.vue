@@ -22,7 +22,12 @@
         tabindex="1"
       >
     </td>
-    <td class="round-score" v-for="(round, roundIndex) in this.rounds" :key="roundIndex">
+    <td
+      class="round-score"
+      v-for="(round, roundIndex) in this.rounds"
+      :key="roundIndex"
+      :title="setUpRoundBreakdown(round)"
+    >
       <input
         type="number"
         class="score"
@@ -34,7 +39,7 @@
         @click="select('score', roundIndex + 1)"
         :tabindex="roundIndex + 2"
       >
-      
+
       <span
         v-if="roundIndex > 0"
         class="total"
@@ -91,6 +96,21 @@ export default class Team extends Vue {
       score: roundScore,
       index: this.index
     });
+  }
+  setUpRoundBreakdown(round: Round) {
+    if (!round.breakdown) return null;
+
+    const { correctAnswers, doubleDown, bonus } = round.breakdown;
+
+    let resultString = `Correct Answers: ${correctAnswers}` + "\n";
+
+    resultString += doubleDown
+      ? `Double Down: ${String.fromCharCode(0x2713)}` + "\n"
+      : "";
+
+    resultString += bonus ? "Bonus Points: 2\n" : "";
+
+    return resultString;
   }
   select(arg: string) {
     let id;

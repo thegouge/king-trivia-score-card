@@ -21,9 +21,9 @@ const baseState: State = {
     players: "",
     empty: "",
     quizRating: "",
-    internal: ""
+    internal: "",
   },
-  teams: []
+  teams: [],
 };
 
 const store = new Vuex.Store({
@@ -35,7 +35,7 @@ const store = new Vuex.Store({
     },
     numTeams(state) {
       return state.teams.length;
-    }
+    },
   },
   mutations: {
     pushTeam(state, payload) {
@@ -47,34 +47,34 @@ const store = new Vuex.Store({
             rounds: [
               {
                 number: 1,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 2,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 3,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 4,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 5,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 6,
-                gained: 0
+                gained: 0,
               },
               {
                 number: 7,
-                gained: 0
-              }
+                gained: 0,
+              },
             ],
-            total: 0
+            total: 0,
           });
       store.commit("saveToLocal", "_autoSave");
     },
@@ -87,14 +87,13 @@ const store = new Vuex.Store({
       store.commit("saveToLocal", "_autoSave");
     },
     updateRounds(state, payload) {
-      state.teams[payload.index].rounds[payload.round - 1].gained =
-        payload.score;
+      const currentTeamRound =
+        state.teams[payload.index].rounds[payload.round - 1];
+      currentTeamRound.gained = payload.score;
 
-      Vue.set(
-        state.teams[payload.index].rounds[payload.round - 1],
-        "graded",
-        true
-      );
+      currentTeamRound.breakdown = payload.breakdown;
+
+      Vue.set(currentTeamRound, "graded", true);
       const newTotal = state.teams[payload.index].rounds.reduce(
         (total, round) => {
           if (round.number === payload.round) {
@@ -137,14 +136,14 @@ const store = new Vuex.Store({
             players: "",
             empty: "",
             quizRating: "",
-            internal: ""
+            internal: "",
           },
-          teams: []
+          teams: [],
         },
         null
       );
-    }
-  }
+    },
+  },
 });
 
 export default store;

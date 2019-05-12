@@ -33,6 +33,6 @@ export interface Round {
 
 interface Breakdown {
   correctAnswers: number;
-  successfulDouble: boolean;
+  doubleDown: boolean;
   bonus: boolean;
 }
