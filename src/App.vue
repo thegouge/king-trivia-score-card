@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <h1>King Trivia Score Card</h1>
+    <header>
+      <img
+        class="king-trivia-logo"
+        src="https://kingtrivia.com/wp-content/uploads/2016/07/King-Trivia-1.jpg"
+        alt="King Trivia"
+        @click="this.simulateLink"
+      >
+      <h1>King Trivia Score Card</h1>
+    </header>
 
     <ul id="tab-bar">
       <li
@@ -9,23 +17,21 @@
         @click="selectedTab = tab"
         :key="index"
         :class="{ activeTab: selectedTab === tab }"
-      >
-        {{ tab }}
-      </li>
+      >{{ tab }}</li>
     </ul>
 
-    <br />
+    <br>
 
     <main>
-      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds" />
+      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds"/>
 
-      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds" />
+      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds"/>
 
-      <Standings v-show="selectedTab === 'Standings'" />
+      <Standings v-show="selectedTab === 'Standings'"/>
 
-      <Timer v-show="selectedTab === 'Timer'" />
+      <Timer v-show="selectedTab === 'Timer'"/>
 
-      <CoinFlip v-show="selectedTab === 'Coin Flip'" />
+      <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
     </main>
   </div>
 </template>
@@ -75,6 +81,11 @@ export default {
       ]
     };
   },
+  methods: {
+    simulateLink() {
+      window.location.href = "https://kingtrivia.com/";
+    }
+  },
   mounted() {
     this.$store.commit("loadFromLocal", "_autoSave");
   }
@@ -82,17 +93,36 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Raleway|Roboto");
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Open Sans, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: 0;
   margin-top: 60px;
-  width: 100%;
+
+  --king-trivia-red: #ab192d;
+  --header-font-family: "Raleway", Helvetica, Arial;
 }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.king-trivia-logo {
+  max-height: 52px;
+  align-self: center;
+  cursor: pointer;
+}
+
 h1 {
-  text-align: center;
+  margin-right: 10%;
+  line-height: 52px;
+  font-family: var(--header-font-family);
 }
 .close-btn {
   float: right;
@@ -177,5 +207,11 @@ h1 {
 
 .activeTab:after {
   box-shadow: -2px 2px 0 white;
+}
+
+@media only screen and (max-width: 950px) {
+  #top-notes {
+    width: 100%;
+  }
 }
 </style>

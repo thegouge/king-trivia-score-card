@@ -129,6 +129,28 @@ export default class Team extends Vue {
 </script>
 
 <style>
+input {
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  background: #f0f0f0;
+  padding: 2px 5px;
+  margin: 0 0 5px;
+  color: #000;
+  text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.total {
+  margin-left: 5px;
+}
+
 .team-line:nth-child(even) {
   background: rgb(201, 201, 201);
 }

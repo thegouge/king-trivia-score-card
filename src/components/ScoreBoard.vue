@@ -4,7 +4,7 @@
     <div id="toolbar">
       <button @click="this.addTeam">Add Team</button>
       <button @click="this.resetTheState">Reset</button>
-      <button @click="this.exportFile">Export</button>
+      <button @click="this.exportFile">Convert to Excel</button>
     </div>
 
     <table id="scores">
@@ -104,6 +104,18 @@ ${metaState.date},${metaState.location},${metaState.arrive},${
 </script>
 
 <style>
+button {
+  background: var(--king-trivia-red);
+  color: white;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 5px 30px;
+  font-weight: 700;
+  border-color: black;
+  cursor: pointer;
+}
+
 #scores {
   width: 100%;
 }

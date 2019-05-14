@@ -2,47 +2,103 @@
   <form id="top-notes" @submit.prevent="onSubmit">
     <p id="in-date" class="in-field">
       <label for="date">Date:</label>
-      <input type="date" id="date" @click="select('date')" v-model="today">
+      <input
+        class="meta-input"
+        type="date"
+        id="date"
+        @click="select('date')"
+        v-model="today"
+        size="6"
+      >
     </p>
 
     <p id="in-loc" class="in-field">
       <label for="location">Location:</label>
-      <input type="text" id="location" v-model="triviaLocation" @click="select('location')">
+      <input
+        class="meta-input"
+        type="text"
+        id="location"
+        v-model="triviaLocation"
+        @click="select('location')"
+        size="6"
+      >
     </p>
 
     <p id="in-arr" class="in-field">
-      <label for="arrive">Arrival Time</label>
-      <input type="time" id="arrive" v-model="arrivalTime" @click="select('arrive')">
+      <label for="arrive">Arrival Time:</label>
+      <input
+        class="meta-input"
+        type="time"
+        id="arrive"
+        v-model="arrivalTime"
+        @click="select('arrive')"
+        size="6"
+      >
     </p>
 
     <p id="in-start" class="in-field">
-      <label for="start">Start Time</label>
-      <input type="time" id="start" v-model="triviaStart" @click="select('start')">
+      <label for="start">Start Time:</label>
+      <input
+        class="meta-input"
+        type="time"
+        id="start"
+        v-model="triviaStart"
+        @click="select('start')"
+        size="6"
+      >
     </p>
 
     <p id="in-end" class="in-field">
-      <label for="end">Ending Time</label>
-      <input type="time" id="end" v-model="triviaEnd" @click="select('end')">
+      <label for="end">Ending Time:</label>
+      <input
+        class="meta-input"
+        type="time"
+        id="end"
+        v-model="triviaEnd"
+        @click="select('end')"
+        size="6"
+      >
     </p>
 
     <p id="in-teams" class="in-field">
-      <label for="teams"># of Teams</label>
-      <input type="number" id="num-teams" v-bind:value="numTeams" @click="select('num-teams')">
+      <label for="teams"># of Teams:</label>
+      <input
+        class="meta-input"
+        type="number"
+        id="num-teams"
+        v-bind:value="numTeams"
+        @click="select('num-teams')"
+        size="6"
+      >
     </p>
 
     <p id="in-play" class="in-field">
-      <label for="players"># of Players</label>
-      <input type="number" id="players" @click="select('players')" v-model="numPlayers">
+      <label for="players"># of Players:</label>
+      <input
+        class="meta-input"
+        type="number"
+        id="players"
+        @click="select('players')"
+        v-model="numPlayers"
+        size="6"
+      >
     </p>
 
     <p id="in-emp" class="in-field">
-      <label for="empty">Empty Tables</label>
-      <input type="number" id="empty" @click="select('empty')" v-model="mtTables">
+      <label for="empty">Empty Tables:</label>
+      <input
+        class="meta-input"
+        type="number"
+        id="empty"
+        @click="select('empty')"
+        v-model="mtTables"
+        size="6"
+      >
     </p>
 
     <p id="in-rate" class="in-field">
       <label for="rating">Rate the Questions!</label>
-      <select v-model="quizRating" id="rating">
+      <select class="meta-input" v-model="quizRating" id="rating">
         <option value="5">5 -- Awesome!</option>
         <option value="4">4</option>
         <option value="3">3</option>
@@ -52,8 +108,8 @@
     </p>
 
     <p id="in-notes" class="in-field">
-      <label for="notes">Notes</label>
-      <textarea id="internal" @click="select('notes')" v-model="otherNotes"></textarea>
+      <label for="notes" id="int-notes-label">Notes:</label>
+      <textarea class="meta-input" id="internal" @click="select('notes')" v-model="otherNotes"/>
     </p>
   </form>
 </template>
@@ -149,7 +205,38 @@ export default class MetaNotes extends Vue {
 </script>
 
 <style scoped>
+label {
+  margin: 0 10px;
+  font-weight: bold;
+  color: var(--king-trivia-red);
+}
+
+.meta-input {
+  width: 150px;
+  font-family: inherit;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  background: #f0f0f0;
+  padding: 2px 5px;
+  margin: 0 0 5px;
+  color: #000;
+}
+
+.in-field {
+  margin: 5px;
+  text-align: right;
+}
+
+#internal {
+  height: 50px;
+}
+
+#int-notes-label {
+  margin-bottom: 50px;
+}
+
 #top-notes {
+  width: 50%;
   display: grid;
   grid-template-areas:
     "a  e"
@@ -157,10 +244,9 @@ export default class MetaNotes extends Vue {
     "c  g"
     "d  h"
     "i  j";
-}
-
-.in-field {
-  margin: 5px;
+  border: 3px solid #444;
+  border-radius: 5px;
+  padding: 25px 10px 10px;
 }
 
 #in-date {
@@ -201,5 +287,11 @@ export default class MetaNotes extends Vue {
 
 #in-notes {
   grid-area: j;
+}
+
+@media only screen and (max-width: 950px) {
+  #top-notes {
+    width: 90%;
+  }
 }
 </style>

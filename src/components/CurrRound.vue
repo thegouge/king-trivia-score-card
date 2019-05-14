@@ -303,8 +303,18 @@ export default class CurrRound extends Vue {
   width: var(--form-width);
   margin: auto;
   padding: 20px;
-  border-radius: 5%;
-  border: 1px solid grey;
+  border: 3px solid #444;
+  border-radius: 5px;
+}
+
+.submit {
+  background: var(--king-trivia-red);
+  color: white;
+  margin-top: 20px;
+  padding: 5px 30px;
+  border-radius: 5px;
+  font-weight: 700;
+  border-color: black;
 }
 
 label {
