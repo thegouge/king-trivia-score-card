@@ -1,6 +1,7 @@
 <template>
   <tr class="team-line">
     <td class="team-box">
+      <span class="delete" @click="deleteTeam()">&times;</span>
       {{ index + 1 }}.
       <input
         type="number"
@@ -125,10 +126,29 @@ export default class Team extends Vue {
     ) as HTMLInputElement;
     element.select();
   }
+  deleteTeam() {
+    this.$store.commit("deleteTeam", { name: this.teamName });
+
+    // const parent: HTMLElement = <HTMLElement>this.$el.parentNode;
+    // parent.removeChild(this.$el);
+  }
 }
 </script>
 
 <style>
+.team-box {
+  position: relative;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
 input {
   border-radius: 5px;
   border: 1px solid #e0e0e0;

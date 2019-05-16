@@ -78,6 +78,14 @@ const store = new Vuex.Store({
           });
       store.commit("saveToLocal", "_autoSave");
     },
+    deleteTeam(state, payload) {
+      const index = state.teams.findIndex(
+        (team) => team.teamName === payload.name
+      );
+
+      state.teams.splice(index, 1);
+      store.commit("saveToLocal", "_autoSave");
+    },
     updateName(state, payload) {
       state.teams[payload.index].teamName = payload.value;
       store.commit("saveToLocal", "_autoSave");

@@ -15,8 +15,13 @@
     <h3
       class="done-grading"
       v-if="graded.length === teamArray.length && this.current !== 1 && this.teamArray.length > 0"
+      style="color: green;"
     >- All teams have been graded! -</h3>
-    <h3 v-else>{{ teamArray.length - graded.length }} more teams to grade!</h3>
+    <h3 v-else-if="this.current === 1"></h3>
+    <h3
+      v-else
+      style="color: var(--king-trivia-red);"
+    >{{ teamArray.length - graded.length }} more teams to grade!</h3>
 
     <form id="round-form" v-on:submit.prevent>
       <label for="curr-team">
@@ -48,6 +53,9 @@
         <input type="checkbox" v-model="double">
 
         <div v-if="this.current <= 3">
+          <label for="check-in">Did they check in on social?</label>
+          <input type="checkbox" v-model="social" name="social">
+
           <label for="registered">What's their team number?</label>
           <input type="number" v-model="teamNum" name="registered" max="99999">
         </div>
@@ -95,14 +103,15 @@ import { TeamType } from "../store/interfaces";
 @Component
 export default class CurrRound extends Vue {
   // DATA
-  current: number = 1;
-  teamName: string = "";
-  teamNum: string = "";
-  teamRight: string = "";
-  double: boolean = false;
-  personPoints: string = "";
-  sevenTotal: string = "10";
-  penPoints: boolean = false;
+  current = 1;
+  teamName = "";
+  teamNum = "";
+  social = false;
+  teamRight = "";
+  double = false;
+  personPoints = "";
+  sevenTotal = "10";
+  penPoints = false;
 
   // COMPUTED
   get teamArray() {
@@ -275,6 +284,10 @@ export default class CurrRound extends Vue {
   display: inline-block;
   margin: 5px;
   user-select: none;
+}
+
+h3 {
+  text-align: center;
 }
 
 #round-title {

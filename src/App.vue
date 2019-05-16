@@ -10,6 +10,8 @@
       <h1>King Trivia Score Card</h1>
     </header>
 
+    <br>
+
     <ul id="tab-bar">
       <li
         class="tab"
@@ -28,6 +30,17 @@
       <Timer v-show="selectedTab === 'Timer'"/>
       <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
     </main>
+
+    <footer>
+      made by
+      <a href="https://thegouge.github.io">Alex Gouge-Schajer</a>
+      <br>if you're confused and want to learn how to use this
+      <strong>Glorius</strong> app, check out the
+      <a
+        href="https://github.com/thegouge/king-trivia-score-card/blob/master/README.md"
+      >README</a>
+      for this project
+    </footer>
   </div>
 </template>
 
@@ -96,7 +109,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: 0;
-  margin-top: 60px;
+  margin-top: 30px;
 
   --king-trivia-red: #ab192d;
   --header-font-family: "Raleway", Helvetica, Arial;
