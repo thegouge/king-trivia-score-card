@@ -4,7 +4,7 @@
     <div id="toolbar">
       <button @click="this.addTeam">Add Team</button>
       <button @click="this.resetTheState">Reset</button>
-      <button @click="this.exportFile">Convert to Excel</button>
+      <button @click="this.exportFile">Download</button>
     </div>
 
     <table id="scores">
