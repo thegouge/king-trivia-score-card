@@ -21,16 +21,11 @@
     </ul>
 
     <br>
-
     <main>
       <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds"/>
-
       <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds"/>
-
       <Standings v-show="selectedTab === 'Standings'"/>
-
       <Timer v-show="selectedTab === 'Timer'"/>
-
       <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
     </main>
   </div>

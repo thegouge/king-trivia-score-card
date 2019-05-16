@@ -287,6 +287,7 @@ export default class CurrRound extends Vue {
 
 .round-button {
   width: var(--button-width);
+  border-radius: 5px;
 }
 
 .button-sub {
