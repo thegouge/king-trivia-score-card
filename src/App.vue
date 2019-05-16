@@ -124,12 +124,14 @@ h1 {
   line-height: 52px;
   font-family: var(--header-font-family);
 }
+
 .close-btn {
   float: right;
   user-select: none;
   cursor: pointer;
   font-weight: bold;
 }
+
 #tab-bar {
   position: relative;
   list-style: none;

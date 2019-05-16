@@ -324,5 +324,6 @@ label {
 
 input {
   display: block;
+  text-align: left;
 }
 </style>

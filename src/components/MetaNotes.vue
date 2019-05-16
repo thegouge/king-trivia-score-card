@@ -220,6 +220,7 @@ label {
   padding: 2px 5px;
   margin: 0 0 5px;
   color: #000;
+  text-align: center;
 }
 
 .in-field {
