@@ -2,7 +2,7 @@
 
 ## A single-page web app for quizmasters to use during a King Trivia Game!
 
-### NOTE: THIS IS FOR QUIZMASTERS (or developers who want to help me out) ONLY!!!
+### This is for King Trivia Quizmasters to use during king trivia games. If you are currently playing a king trivia game, and you're reading this. Shame on you! First rule is no phones! Put that away!
 
 ---
 
