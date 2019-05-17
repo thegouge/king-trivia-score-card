@@ -60,6 +60,12 @@ I am lazy as f\*\*\* and if I can't think of anything clever for my drinking rou
 
 ---
 
+### Quick note about local storage
+
+If you're happily quizmastering away, and you absolutely close the tab or refresh, **fear not!** For this app is more robust than your average app! It saves your scoreboard data to your browser. You'd have to change computers or press the reset button to accidentally erase everything
+
+---
+
 ## Contact
 
 If you would like to offer opinions/suggestions, hit me up at
@@ -71,6 +77,12 @@ or post issues by clicking the "new issue" button on [GitHub](https://github.com
 ---
 
 ## For Developers
+
+### Build Details
+
+This is built in Vue.js with Typescript, so keep that in mind if you'd like to change stuff. Also, this is my first actual project I've ever built in Vue. Please don't point and laugh _too hard_ at my terrible code
+
+...please?...
 
 ### Build Setup
 
