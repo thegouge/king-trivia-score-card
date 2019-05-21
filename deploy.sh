@@ -6,20 +6,6 @@ set -e
 # build
 npm run build
 
-# navigate into the build output directory
-cd dist
+git add dist && git commit -m "Initial dist subtree commit"
 
-# if you are deploying to a custom domain
-# echo 'www.example.com' > CNAME
-
-git init
-git add -A
-git commit -m 'deploy'
-
-# if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
-
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:thegouge/king-trivia-score-card.git master:gh-pages
-
-cd -
+git subtree push --prefix dist origin gh-pages
