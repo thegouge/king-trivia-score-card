@@ -6,6 +6,12 @@
 
 ---
 
+## Update Notes
+
+Now works WAY better on Mobile! Grade on with your phones good quizmasters!
+
+---
+
 ## Usage
 
 for the time being, you must go to [this website](https://thegouge.github.io/king-trivia-score-card/) in order to use this score card. I'll be in talks with King Trivia to integrate it into their site for you. So look for that in the future!
