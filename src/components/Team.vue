@@ -23,7 +23,32 @@
         tabindex="1"
       >
     </td>
+    <td v-if="mobile" class="round-container">
+      <button @click="expandRoundList" :class="(clicked) ? 'active-button' : ''">Score Breakdown</button>
+      <ul class="round-breakdown" v-if="this.clicked">
+        <li v-for="(round, roundIndex) in this.rounds" :key="roundIndex">
+          <h4>Round {{round.number}}</h4>
+          <input
+            type="number"
+            class="score"
+            :id="'score-' + index + '-' + parseInt(roundIndex + 1)"
+            min="-1"
+            max="25"
+            :value="rounds[roundIndex].gained"
+            @change="updateRound"
+            @click="select('score', roundIndex + 1)"
+            :tabindex="roundIndex + 2"
+          >
+
+          <span
+            v-if="roundIndex > 0"
+            class="total"
+          >{{ rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex) }}</span>
+        </li>
+      </ul>
+    </td>
     <td
+      v-else
       class="round-score"
       v-for="(round, roundIndex) in this.rounds"
       :key="roundIndex"
@@ -59,7 +84,12 @@ import { Round } from "../store/interfaces";
 export default class Team extends Vue {
   //PROPS
   @Prop(Number) index!: number;
-  // Calculated
+  @Prop(Boolean) mobile!: boolean;
+
+  // DATA
+  clicked = false;
+
+  // CALCULATED
   get teamNum() {
     return this.$store.state.teams[this.index].teamNum;
   }
@@ -81,7 +111,8 @@ export default class Team extends Vue {
       0
     );
   }
-  // Methods
+
+  // METHODS
   getRoundTotal(index: number) {
     let result = 0;
     for (let i = 0; i < index + 1; i++) {
@@ -126,11 +157,11 @@ export default class Team extends Vue {
     ) as HTMLInputElement;
     element.select();
   }
+  expandRoundList() {
+    this.clicked = !this.clicked;
+  }
   deleteTeam() {
     this.$store.commit("deleteTeam", { name: this.teamName });
-
-    // const parent: HTMLElement = <HTMLElement>this.$el.parentNode;
-    // parent.removeChild(this.$el);
   }
 }
 </script>
@@ -173,5 +204,36 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .team-line:nth-child(even) {
   background: rgb(201, 201, 201);
+}
+
+.active-button {
+  background: white;
+  color: var(--king-trivia-red);
+}
+
+.round-container {
+  position: relative;
+}
+
+.round-breakdown {
+  position: absolute;
+  top: -400px;
+  left: -50px;
+  z-index: 10;
+  background: white;
+  padding: 5px;
+  list-style: none;
+  border: 3px solid #444;
+  border-radius: 5px;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h4 {
+  margin: 0;
 }
 </style>

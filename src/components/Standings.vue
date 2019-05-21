@@ -1,7 +1,7 @@
 <template>
   <div id="rank-box">
     <h2 id="ranking-title">Team Rankings</h2>
-    <ul>
+    <ul class="standing-list">
       <li v-for="(team, index) in this.rankedTeams" :key="index">
         in {{ rankTeam(team) }} place: "{{ team.teamName }}" with
         {{ team.total }} points!
@@ -57,5 +57,9 @@ export default class Standings extends Vue {
 #ranking-title {
   width: fit-content;
   margin: 0;
+}
+
+.standing-list {
+  width: 70%;
 }
 </style>

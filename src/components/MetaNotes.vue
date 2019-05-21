@@ -290,6 +290,12 @@ label {
   grid-area: j;
 }
 
+@media only screen and (max-width: 1170px) {
+  label {
+    display: block;
+  }
+}
+
 @media only screen and (max-width: 950px) {
   #top-notes {
     width: 90%;

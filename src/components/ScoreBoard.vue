@@ -12,14 +12,21 @@
         <th id="num-title">Team#</th>
         <th id="name-title">Team Name</th>
 
+        <th v-if="this.mobile">Rounds</th>
         <th
+          v-else
           class="round-num"
           v-for="(round, index) in this.rounds"
           :key="index"
         >Round {{ round.number }}</th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
-      <team v-for="(team, index) in this.teamsArray" :key="index" v-bind:index="index"/>
+      <team
+        v-for="(team, index) in this.teamsArray"
+        :key="index"
+        v-bind:index="index"
+        :mobile="mobile"
+      />
     </table>
   </div>
 </template>
@@ -42,6 +49,9 @@ export default class ScoreBoard extends Vue {
   // PROPS
   @Prop({ required: true })
   public rounds!: Round[];
+
+  // DATA
+  mobile = window.innerWidth < 775;
 
   // CALCULATED
   get teamsArray() {

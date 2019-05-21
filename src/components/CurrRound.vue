@@ -284,6 +284,7 @@ export default class CurrRound extends Vue {
   display: inline-block;
   margin: 5px;
   user-select: none;
+  text-align: center;
 }
 
 h3 {
@@ -339,5 +340,11 @@ label {
 input {
   display: block;
   text-align: left;
+}
+
+@media only screen and (max-width: 740px) {
+  #curr-round {
+    --form-width: 70%;
+  }
 }
 </style>

@@ -220,8 +220,47 @@ h1 {
 }
 
 @media only screen and (max-width: 950px) {
+  #tab-bar {
+    padding: 0;
+  }
+
   #top-notes {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    margin-right: 0;
+  }
+
+  .tab:before,
+  .tab:after {
+    position: relative;
+    width: 0;
+    height: 0;
+    border: none;
+    content: "";
+    box-shadow: none;
+  }
+
+  .tab {
+    line-height: inherit;
+    border-radius: 0;
+    background: var(--king-trivia-red);
+    color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px 30px;
+    font-weight: 700;
+    border-color: black;
+    cursor: pointer;
+  }
+
+  .activeTab {
+    background: white;
+    color: var(--king-trivia-red);
   }
 }
 </style>
