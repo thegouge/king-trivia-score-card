@@ -8,7 +8,7 @@
     </div>
 
     <table id="scores">
-      <tr id="top-bar">
+      <tr v-if="teamsArray.length > 0" id="top-bar">
         <th id="num-title">Team#</th>
         <th id="name-title">Team Name</th>
 
@@ -128,6 +128,7 @@ button {
 
 #scores {
   width: 100%;
+  min-height: 200px;
 }
 
 td {

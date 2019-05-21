@@ -219,6 +219,24 @@ h1 {
   box-shadow: -2px 2px 0 white;
 }
 
+footer {
+  background: #111111;
+  color: #a8a8a8;
+  padding: 22px;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: 0.5s;
+}
+
+footer a:hover {
+  color: orange;
+}
+
 @media only screen and (max-width: 950px) {
   #tab-bar {
     padding: 0;
