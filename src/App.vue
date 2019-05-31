@@ -44,6 +44,7 @@
   </div>
 </template>
 
+
 <script>
 import ScoreBoard from "./components/ScoreBoard";
 import CurrRound from "./components/CurrRound";
@@ -99,6 +100,7 @@ export default {
   }
 };
 </script>
+
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Raleway|Roboto");
@@ -223,6 +225,7 @@ footer {
   background: #111111;
   color: #a8a8a8;
   padding: 22px;
+  margin-top: 50px;
 }
 
 footer a {
