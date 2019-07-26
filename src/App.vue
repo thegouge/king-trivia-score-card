@@ -6,11 +6,11 @@
         src="https://kingtrivia.com/wp-content/uploads/2016/07/King-Trivia-1.jpg"
         alt="King Trivia"
         @click="this.simulateLink"
-      >
+      />
       <h1>King Trivia Score Card</h1>
     </header>
 
-    <br>
+    <br />
 
     <ul id="tab-bar">
       <li
@@ -22,19 +22,19 @@
       >{{ tab }}</li>
     </ul>
 
-    <br>
+    <br />
     <main>
-      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds"/>
-      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds"/>
-      <Standings v-show="selectedTab === 'Standings'"/>
-      <Timer v-show="selectedTab === 'Timer'"/>
-      <CoinFlip v-show="selectedTab === 'Coin Flip'"/>
+      <ScoreBoard v-show="selectedTab === 'Score Board'" :rounds="rounds" />
+      <CurrRound v-show="selectedTab === 'Current Round'" :rounds="rounds" />
+      <Standings v-show="selectedTab === 'Standings'" />
+      <Timer v-show="selectedTab === 'Timer'" />
+      <CoinFlip v-show="selectedTab === 'Coin Flip'" />
     </main>
 
     <footer>
       made by
       <a href="https://thegouge.github.io">Alex Gouge-Schajer</a>
-      <br>if you're confused and want to learn how to use this
+      <br />if you're confused and want to learn how to use this
       <strong>Glorius</strong> app, check out the
       <a
         href="https://github.com/thegouge/king-trivia-score-card/blob/master/README.md"
