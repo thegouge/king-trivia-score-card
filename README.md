@@ -4,6 +4,8 @@
 
 ### This is for King Trivia Quizmasters to use during king trivia games. If you are currently playing a king trivia game, and you're reading this. Shame on you! First rule is no phones! Put that away!
 
+check out the app itself [here](https://thegouge.github.io/king-trivia-score-card/)
+
 ---
 
 ## Update Notes
