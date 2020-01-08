@@ -9,7 +9,7 @@
         @click="select('date')"
         v-model="today"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-loc" class="in-field">
@@ -21,7 +21,7 @@
         v-model="triviaLocation"
         @click="select('location')"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-arr" class="in-field">
@@ -33,7 +33,7 @@
         v-model="arrivalTime"
         @click="select('arrive')"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-start" class="in-field">
@@ -45,7 +45,7 @@
         v-model="triviaStart"
         @click="select('start')"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-end" class="in-field">
@@ -57,7 +57,7 @@
         v-model="triviaEnd"
         @click="select('end')"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-teams" class="in-field">
@@ -69,7 +69,7 @@
         v-bind:value="numTeams"
         @click="select('num-teams')"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-play" class="in-field">
@@ -81,7 +81,7 @@
         @click="select('players')"
         v-model="numPlayers"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-emp" class="in-field">
@@ -93,7 +93,7 @@
         @click="select('empty')"
         v-model="mtTables"
         size="6"
-      >
+      />
     </p>
 
     <p id="in-rate" class="in-field">
@@ -109,7 +109,12 @@
 
     <p id="in-notes" class="in-field">
       <label for="notes" id="int-notes-label">Notes:</label>
-      <textarea class="meta-input" id="internal" @click="select('notes')" v-model="otherNotes"/>
+      <textarea
+        class="meta-input"
+        id="internal"
+        @click="select('notes')"
+        v-model="otherNotes"
+      />
     </p>
   </form>
 </template>
@@ -193,13 +198,13 @@ export default class MetaNotes extends Vue {
 
   // METHODS
   select(arg: string) {
-    const element: HTMLInputElement = <HTMLInputElement>(
+    const element: HTMLInputElement = (
       document.getElementById(arg)
-    );
+    ) as HTMLInputElement;
     element.select();
   }
   updateMeta(note: string, newValue: string) {
-    this.$store.commit("updateMeta", { noteToUpdate: note, value: newValue });
+    this.$store.commit("updateMeta", {noteToUpdate: note, value: newValue})
   }
 }
 </script>

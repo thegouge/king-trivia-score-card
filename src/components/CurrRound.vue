@@ -228,7 +228,7 @@ export default class CurrRound extends Vue {
 
       this.reset();
       this.teamName = "";
-      const element = <HTMLInputElement>document.getElementById("curr-team");
+      const element = document.getElementById("curr-team") as HTMLInputElement;
       element.select();
     }
   }
@@ -268,7 +268,7 @@ export default class CurrRound extends Vue {
         }
       ],
       total: 0
-    });
+    })
   }
 }
 </script>
