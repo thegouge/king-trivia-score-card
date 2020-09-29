@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header>
+    <header class="app-header">
       <img
         class="king-trivia-logo"
         src="https://kingtrivia.com/wp-content/uploads/2016/07/King-Trivia-1.jpg"
@@ -128,14 +128,14 @@ export default {
 
 .king-trivia-title {
   text-align: right;
-  padding-right: 10px;
   width: fit-content;
 }
 
-header {
+.app-header {
   display: flex;
   justify-content: space-between;
   align-content: center;
+  padding: 10px;
 }
 
 .king-trivia-logo {
