@@ -307,4 +307,10 @@ label {
     margin: auto;
   }
 }
+@media only screen and (max-width: 600px) {
+  .meta-input {
+    width: 120px;
+    padding: 2px;
+  }
+}
 </style>
