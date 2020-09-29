@@ -11,7 +11,7 @@
         max="99999"
         @click="select('team-num')"
         v-model="teamNum"
-      >
+      />
     </td>
     <td class="name">
       <input
@@ -21,13 +21,18 @@
         v-model="teamName"
         @click="select('team-name')"
         tabindex="1"
-      >
+      />
     </td>
     <td v-if="mobile" class="round-container">
-      <button @click="expandRoundList" :class="(clicked) ? 'active-button' : ''">Score Breakdown</button>
+      <button
+        @click="expandRoundList"
+        :class="`round-breakdown-btn ${clicked ? 'active-button' : ''}`"
+      >
+        Score Breakdown
+      </button>
       <ul class="round-breakdown" v-if="this.clicked">
         <li v-for="(round, roundIndex) in this.rounds" :key="roundIndex">
-          <h4>Round {{round.number}}</h4>
+          <h4>Round {{ round.number }}</h4>
           <input
             type="number"
             class="score"
@@ -38,12 +43,11 @@
             @change="updateRound"
             @click="select('score', roundIndex + 1)"
             :tabindex="roundIndex + 2"
-          >
+          />
 
-          <span
-            v-if="roundIndex > 0"
-            class="total"
-          >{{ rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex) }}</span>
+          <span v-if="roundIndex > 0" class="total">{{
+            rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex)
+          }}</span>
         </li>
       </ul>
     </td>
@@ -64,12 +68,11 @@
         @change="updateRound"
         @click="select('score', roundIndex + 1)"
         :tabindex="roundIndex + 2"
-      >
+      />
 
-      <span
-        v-if="roundIndex > 0"
-        class="total"
-      >{{ rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex) }}</span>
+      <span v-if="roundIndex > 0" class="total">{{
+        rounds[roundIndex].gained === 0 ? 0 : getRoundTotal(roundIndex)
+      }}</span>
     </td>
     <td class="team-total">{{ total }}</td>
   </tr>
@@ -126,7 +129,7 @@ export default class Team extends Vue {
     this.$store.commit("updateRounds", {
       round: roundToScore,
       score: roundScore,
-      index: this.index
+      index: this.index,
     });
   }
   setUpRoundBreakdown(round: Round) {
@@ -171,6 +174,10 @@ export default class Team extends Vue {
   position: relative;
 }
 
+.team-num {
+  margin: 5px;
+}
+
 .delete {
   position: absolute;
   top: 0;
@@ -178,6 +185,10 @@ export default class Team extends Vue {
   padding: 5px;
   cursor: pointer;
   user-select: none;
+}
+
+.name {
+  padding: 0px 5px;
 }
 
 input {
@@ -204,6 +215,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .team-line:nth-child(even) {
   background: rgb(201, 201, 201);
+}
+
+.round-breakdown-btn {
+  font-size: 0.6rem;
 }
 
 .active-button {
@@ -235,5 +250,30 @@ li {
 
 h4 {
   margin: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .team-num {
+    width: 50px;
+  }
+
+  .team-box {
+    width: 20px !important;
+  }
+
+  .name {
+    width: 100px;
+  }
+
+  .team-name {
+    width: 90px;
+  }
+
+  .round-container {
+    width: 100px;
+  }
+  .team-total {
+    width: 30px;
+  }
 }
 </style>

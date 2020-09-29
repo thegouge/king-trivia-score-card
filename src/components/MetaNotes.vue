@@ -198,13 +198,13 @@ export default class MetaNotes extends Vue {
 
   // METHODS
   select(arg: string) {
-    const element: HTMLInputElement = (
-      document.getElementById(arg)
+    const element: HTMLInputElement = document.getElementById(
+      arg
     ) as HTMLInputElement;
     element.select();
   }
   updateMeta(note: string, newValue: string) {
-    this.$store.commit("updateMeta", {noteToUpdate: note, value: newValue})
+    this.$store.commit("updateMeta", { noteToUpdate: note, value: newValue });
   }
 }
 </script>
@@ -303,7 +303,8 @@ label {
 
 @media only screen and (max-width: 950px) {
   #top-notes {
-    width: 90%;
+    width: 95%;
+    margin: auto;
   }
 }
 </style>

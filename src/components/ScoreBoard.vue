@@ -1,6 +1,6 @@
 <template>
   <div id="board">
-    <MetaNotes/>
+    <MetaNotes />
     <div id="toolbar">
       <button @click="this.addTeam">Add Team</button>
       <button @click="this.resetTheState">Reset</button>
@@ -18,7 +18,9 @@
           class="round-num"
           v-for="(round, index) in this.rounds"
           :key="index"
-        >Round {{ round.number }}</th>
+        >
+          Round {{ round.number }}
+        </th>
         <th class="round-num" id="total-title">Total</th>
       </tr>
       <team
@@ -42,8 +44,8 @@ import Team from "./Team.vue";
 @Component({
   components: {
     MetaNotes,
-    Team
-  }
+    Team,
+  },
 })
 export default class ScoreBoard extends Vue {
   // PROPS
@@ -87,20 +89,12 @@ export default class ScoreBoard extends Vue {
     const teams = this.$store.getters.rankedTeams;
     const metaCSV = `King Trivia Score Sheet!
 Date:,Location:,ArrivalTime:,Show Start:,Show End:,Teams:,Players:,Empty Tables:,Question Rating:,Int. Notes:
-${metaState.date},${metaState.location},${metaState.arrive},${
-      metaState.start
-    },${metaState.end},${teams.length},${metaState.players},${
-      metaState.empty
-    },${metaState.quizRating},${metaState.internal}\n`;
+${metaState.date},${metaState.location},${metaState.arrive},${metaState.start},${metaState.end},${teams.length},${metaState.players},${metaState.empty},${metaState.quizRating},${metaState.internal}\n`;
 
     let teamsCSV = `Team Number:,Name:,Round 1,Round 2,Round 3,Round 4,Round 5,Round 6,Round 7, Total\n`;
     teamsCSV += teams
       .map((team: TeamType) => {
-        return `${team.teamNum},${team.teamName},${team.rounds[0].gained},${
-          team.rounds[1].gained
-        },${team.rounds[2].gained},${team.rounds[3].gained},${
-          team.rounds[4].gained
-        },${team.rounds[5].gained},${team.rounds[6].gained},${team.total}`;
+        return `${team.teamNum},${team.teamName},${team.rounds[0].gained},${team.rounds[1].gained},${team.rounds[2].gained},${team.rounds[3].gained},${team.rounds[4].gained},${team.rounds[5].gained},${team.rounds[6].gained},${team.total}`;
       })
       .join("\n");
 
@@ -117,10 +111,8 @@ ${metaState.date},${metaState.location},${metaState.arrive},${
 button {
   background: var(--king-trivia-red);
   color: white;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  padding: 5px 30px;
+  margin: 5px;
+  padding: 5px;
   font-weight: 700;
   border-color: black;
   cursor: pointer;
@@ -135,7 +127,7 @@ td {
   text-align: center;
   border: 1px solid black;
   margin: 0;
-  padding: 5px;
+  padding: 0;
 }
 
 .team-box {

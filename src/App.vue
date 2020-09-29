@@ -19,7 +19,9 @@
         @click="selectedTab = tab"
         :key="index"
         :class="{ activeTab: selectedTab === tab }"
-      >{{ tab }}</li>
+      >
+        {{ tab }}
+      </li>
     </ul>
 
     <br />
@@ -38,7 +40,8 @@
       <strong>Glorius</strong> app, check out the
       <a
         href="https://github.com/thegouge/king-trivia-score-card/blob/master/README.md"
-      >README</a>
+        >README</a
+      >
       for this project
     </footer>
   </div>
@@ -59,7 +62,7 @@ export default {
     CurrRound,
     Standings,
     Timer,
-    CoinFlip
+    CoinFlip,
   },
   data() {
     return {
@@ -67,43 +70,49 @@ export default {
       selectedTab: "Score Board",
       rounds: [
         {
-          number: 1
+          number: 1,
         },
         {
-          number: 2
+          number: 2,
         },
         {
-          number: 3
+          number: 3,
         },
         {
-          number: 4
+          number: 4,
         },
         {
-          number: 5
+          number: 5,
         },
         {
-          number: 6
+          number: 6,
         },
         {
-          number: 7
-        }
-      ]
+          number: 7,
+        },
+      ],
     };
   },
   methods: {
     simulateLink() {
       window.location.href = "https://kingtrivia.com/";
-    }
+    },
   },
   mounted() {
     this.$store.commit("loadFromLocal", "_autoSave");
-  }
+  },
 };
 </script>
 
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Raleway|Roboto");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 #app {
   font-family: "Roboto", Open Sans, Helvetica, sans-serif;
