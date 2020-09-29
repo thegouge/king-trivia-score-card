@@ -53,14 +53,18 @@ export default class ScoreBoard extends Vue {
   public rounds!: Round[];
 
   // DATA
-  mobile = window.innerWidth < 775;
+  mobile = false;
 
-  // CALCULATED
+  // COMPUTED
   get teamsArray() {
     return this.$store.state.teams;
   }
 
   // METHODS
+  checkForMobile() {
+    this.mobile = window.innerWidth < 775;
+  }
+
   addTeam() {
     this.$store.commit("pushTeam", null);
   }
@@ -104,6 +108,14 @@ ${metaState.date},${metaState.location},${metaState.arrive},${metaState.start},$
   resetTheState() {
     this.$store.commit("resetAutoSave");
   }
+
+  // LIFECYCLE
+  created() {
+    window.addEventListener("resize", this.checkForMobile);
+  }
+  destroyed() {
+    window.removeEventListener("resize", this.checkForMobile);
+  }
 }
 </script>
 
@@ -127,11 +139,6 @@ td {
   text-align: center;
   border: 1px solid black;
   margin: 0;
-  padding: 0;
-}
-
-.team-box {
-  width: 150px;
   padding: 0;
 }
 </style>

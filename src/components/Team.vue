@@ -172,16 +172,19 @@ export default class Team extends Vue {
 <style>
 .team-box {
   position: relative;
+  width: 70px;
+  padding: 0;
 }
 
 .team-num {
   margin: 5px;
+  width: 50px;
 }
 
 .delete {
   position: absolute;
-  top: 0;
-  left: 5px;
+  top: -7px;
+  left: -3px;
   padding: 5px;
   cursor: pointer;
   user-select: none;
@@ -255,10 +258,6 @@ h4 {
 @media only screen and (max-width: 600px) {
   .team-num {
     width: 50px;
-  }
-
-  .team-box {
-    width: 20px !important;
   }
 
   .name {

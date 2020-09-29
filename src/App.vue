@@ -7,7 +7,7 @@
         alt="King Trivia"
         @click="this.simulateLink"
       />
-      <h1>King Trivia Score Card</h1>
+      <h1 class="king-trivia-title">King Trivia Score Card</h1>
     </header>
 
     <br />
@@ -124,6 +124,12 @@ export default {
 
   --king-trivia-red: #ab192d;
   --header-font-family: "Raleway", Helvetica, Arial;
+}
+
+.king-trivia-title {
+  text-align: right;
+  padding-right: 10px;
+  width: fit-content;
 }
 
 header {
