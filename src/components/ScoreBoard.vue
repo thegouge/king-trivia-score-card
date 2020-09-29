@@ -53,7 +53,8 @@ export default class ScoreBoard extends Vue {
   public rounds!: Round[];
 
   // DATA
-  mobile = false;
+  breakpoint = 775;
+  mobile = window.innerWidth < this.breakpoint;
 
   // COMPUTED
   get teamsArray() {
@@ -62,7 +63,7 @@ export default class ScoreBoard extends Vue {
 
   // METHODS
   checkForMobile() {
-    this.mobile = window.innerWidth < 775;
+    this.mobile = window.innerWidth < this.breakpoint;
   }
 
   addTeam() {
