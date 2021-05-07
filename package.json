@@ -10,7 +10,7 @@
     "deploy": "deploy.sh"
   },
   "dependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "vue": "^2.6.12",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
